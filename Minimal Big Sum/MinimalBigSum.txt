@@ -1,0 +1,86 @@
+Minimal Big Sum
+Suppose 'A' is a non empty zero indexed array of 'N' integers and 'K' is another Integer.
+ Array 'A' needs to be divided into 'K' blocks of consecutive elements.  
+
+﻿
+ Size of the block is any integer such that , 0 <= size of block <= N. Every element of the array should belong to some block. 
+
+The sum of the block from X to Y equals A[X] + A[X + 1] + ... + A[Y]. The sum of empty block equals 0.
+
+The big sum is defined as the maximal sum of any block.
+
+﻿ 
+
+For example, you are given integers 'K' = 3 and array A such that:
+   A[0] = 2
+   A[1] = 1
+   A[2] = 5
+   A[3] = 1
+   A[4] = 2
+   A[5] = 2
+   A[6] = 2 
+
+The array can be divided, for example, into the following blocks: 
+
+        [2, 1, 5, 1, 2, 2, 2], [], [] with a big sum of 15;
+         [2], [1, 5, 1, 2], [2, 2] with a big sum of 9;
+         [2, 1, 5], [], [1, 2, 2, 2] with a big sum of 8;
+         [2, 1], [5, 1], [2, 2, 2] with a big sum of 6.
+
+﻿ 
+
+The goal is to minimize the big sum. In the above example, 6 is the minimal big sum. 
+
+﻿ 
+
+Given integer K and a non-empty zero-indexed array A consisting of N integers, returns the minimal big sum. 
+
+﻿ 
+
+For example, given K = 3 and array A such that:
+   A[0] = 2
+   A[1] = 1
+   A[2] = 5
+   A[3] = 1
+   A[4] = 2
+   A[5] = 2
+   A[6] = 2 
+
+the function should return 6, as explained above.
+
+﻿ 
+
+Assume that: 
+
+        N and K are integers within the range [1..100,000];
+         each element of array A is an integer within the range [0..M].﻿ 
+
+Input :
+First Line : T : Number of test cases
+ Second Line : K : Number of Blocks.
+ Third Line : N : Number of elements in the input array
+ Fourth Line : Elements of array separated by space.
+ Fifth Line : next test case follows 
+
+﻿ 
+
+Output
+#Test_Case minimized_big_sum 
+
+﻿ 
+
+Sample Input
+2
+ 3
+ 7
+ 2 1 5 1 2 2 2
+ 4
+ 10
+ 10 2 1 5 1 2 2 2 9 11 
+
+﻿ 
+
+Sample Output  
+
+#1 6
+ #2 12

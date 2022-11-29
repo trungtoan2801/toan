@@ -1,0 +1,1925 @@
+<!DOCTYPE html>
+<!-- saved from url=(0046)http://107.113.168.240/common/satti/problem.do -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<!--HTTP 1.1-->
+	
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">
+<!-- 	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>  -->
+	<meta http-equiv="X-UA-Compatible" content="IE=11">
+
+<title>SW Certificate System</title>
+<link rel="stylesheet" href="./MoutainWaking_files/default_satti.css" type="text/css">
+<link rel="stylesheet" href="./MoutainWaking_files/jquery-ui-1.8.21.custom.css" type="text/css">
+
+
+
+
+
+<script src="./MoutainWaking_files/jquery-1.7.2.js.download" type="text/javascript"></script>
+<script src="./MoutainWaking_files/jquery-ui.js.download" type="text/javascript"></script>
+<script src="./MoutainWaking_files/common.js.download" type="text/javascript"></script>
+<script src="./MoutainWaking_files/common_satti.js.download" type="text/javascript"></script><style type="text/css">* html {background:#fff;}#header{position:fixed;_position:absolute;z-index:999;width:100%;top:0px;right:0px;_top:expression(document.documentElement.scrollTop+document.documentElement.clientHeight-this.clientHeight);_left:expression(document.documentElement.scrollLeft + document.documentElement.clientWidth - offsetWidth);}</style><style type="text/css">* html {background:#fff;}#footer{position:fixed;_position:absolute;z-index:999;width:100%;bottom:0px;right:0px;_top:expression(document.documentElement.scrollTop+document.documentElement.clientHeight-this.clientHeight);_left:expression(document.documentElement.scrollLeft + document.documentElement.clientWidth - offsetWidth);}</style><style type="text/css">* html {background:#fff;}#aside{position:fixed;_position:absolute;z-index:999;height:100%;top:0px;left:0px;_top:expression(document.documentElement.scrollTop+document.documentElement.clientHeight-this.clientHeight);_left:expression(document.documentElement.scrollLeft + document.documentElement.clientWidth - offsetWidth);}</style>
+<script src="./MoutainWaking_files/commonCalendar.js.download" type="text/javascript"></script></head><body><div id="minical" class="cal_wrap" onmouseover="caledarOver()">
+</div>
+
+<script src="./MoutainWaking_files/portalCommon.js.download" type="text/javascript"></script>
+<script src="./MoutainWaking_files/numberFormat.js.download" type="text/javascript"></script>
+<script src="./MoutainWaking_files/lang.do"></script>
+
+<script type="text/javascript">
+	var contextPath="/common";
+
+	function logout()
+	{
+	    // top.location.replace("/common/identity/logout.do");
+	}
+
+	function changeLang(lang)
+	{
+		$.ajax({
+		    url : contextPath + "/satti/changeLanguage.do",
+		    type : 'POST',
+		    data : {language:lang},
+		    success: function () {
+		    	// location.reload();
+		    	var frm = document.MainForm;
+		    	if(frm)
+		    	{
+		    		frm.action = frm.do_url.value;
+		    		frm.submit();
+		    	}
+		    	else
+		    	{
+			    	location.href = location.href;
+		    	}
+		    },
+		    error : function () {
+		    	alert("Fail Change Language.");
+		    },
+		    scope : this
+		});
+	}
+
+	function pop_guide(contestId)
+	{
+		var url = "/common/satti/pop_guide.do?contestId=" + contestId;
+		window.open(url,'guide','top=100,left=350,width=840, height=680,scrollbars=yes,status=0,resizable=yes,menubar=0,toolbar=0,location=0,titlebar=0,directories=0,addressbar:0');
+	}
+
+	function pop_faq(contestId)
+	{
+		var url = "/common/satti/pop_faq.do?contestId=" + contestId;
+		window.open(url,'faq','top=100,left=350,width=840, height=680,scrollbars=yes,status=0,resizable=yes,menubar=0,toolbar=0,location=0,titlebar=0,directories=0,addressbar:0');
+	}
+	
+	function pop_notice_list(contestId)
+	{
+		var url = "/common/satti/pop_notice_list.do?contestId=" + contestId;
+		window.open(url,'noticelist','top=100,left=350,width=840, height=680,scrollbars=yes,status=0,resizable=yes,menubar=0,toolbar=0,location=0,titlebar=0,directories=0,addressbar:0');
+	}
+	
+	function pop_qna(contestId)
+	{
+		var url = "/common/satti/pop_qna.do?contestId=" + contestId;
+		window.open(url,'qna','top=100,left=350,width=950, height=530,scrollbars=yes,status=0,resizable=yes,menubar=0,toolbar=0,location=0,titlebar=0,directories=0,addressbar:0');
+	}
+	
+	function pop_qna_list(contestId)
+	{
+		var url = "/common/satti/pop_qna_list.do?contestId=" + contestId;
+		window.open(url,'qnalist','top=100,left=350,width=840, height=680,scrollbars=yes,status=0,resizable=yes,menubar=0,toolbar=0,location=0,titlebar=0,directories=0,addressbar:0');
+	}
+	
+	function pop_sampleInput(contestProbId)
+	{
+		var url = "/common/satti/pop_sampleInput.do?contestProbId=" + contestProbId;
+		window.open(url,'sampleInput','top=100,left=350,width=950, height=680,scrollbars=yes,status=0,resizable=yes,menubar=0,toolbar=0,location=0,titlebar=0,directories=0,addressbar:0');
+	}
+
+	function pop_code(contestId, contestProbId, contestHistoryId)
+	{
+		var url = "/common/satti/pop_code.do?contestId=" + contestId + "&contestProbId=" + contestProbId + "&contestHistoryId=" + contestHistoryId;
+		window.open(url,'faq','top=100,left=350,width=840, height=680,scrollbars=yes,status=0,resizable=yes,menubar=0,toolbar=0,location=0,titlebar=0,directories=0,addressbar:0');
+	}
+
+	function guideViewer(language, contestType){
+
+// 		$.ajax({
+// 		    url : contextPath + "/p_stopcoder/contest/checkUpdatedManual.do",
+// 		    type : 'POST',
+// 		    data : { 
+// 		    		contestTypeCd : contestType,
+// 		    		language : language
+// 		    		},
+// 		    success: function () {
+// 		    	var fileName ="";
+// 				if(language == 'ko')
+// 				{
+// 					if(contestType == "IT"){
+// 						fileName = "guideViewer";
+// 					}else if(contestType == "IG"){
+// 						fileName = "guideIGViewer";
+// 					}else if(contestType == "FT"){
+// 						fileName = "guideFTViewer";
+// 					}else {
+// 						fileName = "guideATViewer";
+// 					}
+// 				}
+// 				else
+// 				{
+// 					if(contestType == "IT"){
+// 						fileName = "guideViewer_en";
+// 					}else if(contestType == "IG"){
+// 						fileName = "guideIGViewer_en";
+// 					}else if(contestType == "FT"){
+// 						fileName = "guideFTViewer_en";
+// 					}else {
+// 						fileName = "guideATViewer_en";
+// 					}
+// 				}
+
+// 				var guideWindow = window.open("/common/jsp/common/"+fileName+".html", "guide", "toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,width=1024,height=768");
+
+// 		  	    if(guideWindow){
+// 				   	guideWindow.focus();
+// 				}
+// 		    },
+// 		    error : function () {
+// 		    }
+// 		});
+	
+		var url = "/common/satti/manualView.do?contestTypeCd="+contestType+"&language="+language;
+		var guideWindow = window.open(url, "guideViewer", "toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,width=1024,height=768");
+
+	}
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="./MoutainWaking_files/codemirror.css" type="text/css">
+<link rel="stylesheet" href="./MoutainWaking_files/eclipse.css" type="text/css">
+<link rel="stylesheet" href="./MoutainWaking_files/fullscreen.css" type="text/css">
+<link rel="stylesheet" href="./MoutainWaking_files/dialog.css" type="text/css">
+<script language="Javascript" type="text/javascript" src="./MoutainWaking_files/codemirror.js.download"></script>
+<script language="Javascript" type="text/javascript" src="./MoutainWaking_files/matchbrackets.js.download"></script>
+<script language="Javascript" type="text/javascript" src="./MoutainWaking_files/active-line.js.download"></script>
+<script language="Javascript" type="text/javascript" src="./MoutainWaking_files/clike.js.download"></script>
+<script language="Javascript" type="text/javascript" src="./MoutainWaking_files/fullscreen.js.download"></script>
+<script language="Javascript" type="text/javascript" src="./MoutainWaking_files/dialog.js.download"></script>
+<script language="Javascript" type="text/javascript" src="./MoutainWaking_files/searchcursor.js.download"></script>
+<script language="Javascript" type="text/javascript" src="./MoutainWaking_files/search.js.download"></script>
+
+<!-- <script language="Javascript" type="text/javascript" src="../edit_area/edit_area_full.js"></script> -->
+<script language="Javascript" type="text/javascript" src="./MoutainWaking_files/jquery.form.js.download"></script>
+<script language="Javascript" type="text/javascript">
+    var isEditChange = false;
+    var prevSelCodeLang;
+    var remainSeconds = '1626777' - 0;
+    var cEditor;
+//     var cEditor = CodeMirror.fromTextArea(document.getElementById("textSource"), {
+//         lineNumbers: true,
+//         matchBrackets: true,
+//         mode: "text/x-csrc"
+//       });
+
+    
+
+	// 윈도우창 닫을때
+	window.onbeforeunload = function ()
+	{
+	    if(isEditChange)
+	    {
+	        return 'Do you want to close this window without saving current document?';
+	    }
+	}
+
+	// 편집 변경에 대한 확인
+	function checkEditChangeConfirm()
+	{
+	    if(isEditChange)
+	    {
+	        if(confirm("Do you want to move to other pages without saving changed document?"))
+	        {
+	            window.onbeforeunload = null;
+	            return true;
+	        }
+	        else
+	        {
+	            return false;
+	        }
+	    }
+	    else
+	    {
+	        return true;
+	    }
+	}
+
+	$(document).ready(function()
+	{
+		displayTimer('remainTime', remainSeconds);
+
+		
+
+		tickMinute();
+		tickSecond();
+	});
+
+	// 시간을 시계로 표시
+	function displayTimer(id, sec)
+	{
+	    var Seconds = sec;
+
+	    var Hours = Math.floor(Seconds / 3600);
+	    Seconds -= Hours * (3600);
+
+	    var Minutes = Math.floor(Seconds / 60);
+	    Seconds -= Minutes * (60);
+
+	    $("#" + id).html(leadingZero(Hours) + " : " + leadingZero(Minutes) + " : " + leadingZero(Seconds));
+	}
+
+	// 시분초 2자리 만들기
+	function leadingZero(Time)
+	{
+	    return (Time < 10)  ? "0" + Time  : +Time;
+	}
+
+	// 신입검정 시계표시
+	function displayTimer_FT()
+	{
+		 displayTimer('probTime1', prob1Seconds); 
+		 displayTimer('probTime2', prob2Seconds); 
+		 displayTimer('probTime3', prob3Seconds); 
+		 displayTimer('probTime4', prob4Seconds); 
+		 displayTimer('probTime5', prob5Seconds); 
+	}
+
+	// 1분마다 호출
+	function tickMinute()
+	{
+		var params = {};
+		var url = contextPath + "/satti/contest/contestRemainTime.do";
+
+		$.ajax(
+		{
+			type : "POST",
+			url : url,
+			data : params,
+			async: false,
+			success : function(ret)
+			{
+				
+				if(ret.notice != null){
+					var notice = ret.notice.messageContent;
+					var noticeEn = ret.notice.messageContentEn;
+					var noticeMessage = "Notice";
+										
+					if ('en' == 'ko')
+					{
+						$('#answerContent').val(notice);					
+					} else {
+						$('#answerContent').val(noticeEn);											
+					}
+					
+					document.getElementById("contentMessage").innerHTML = noticeMessage;
+					layer_open('answerBox');
+					
+				}
+				
+				if(ret.answer != null){
+					var answer = "[";
+					var answerMessage = "Answer";
+					switch(ret.answer.selectionValue){
+						case '0' :
+							answer += "Yes";
+							break;
+						case '1' :
+							answer += "No";
+							break;
+						case '2' :
+							answer += "Can not provide an answer";
+							break;
+						case '3' :
+							answer += "Etc.";
+							break;
+						default:
+							break;
+					}
+						
+					answer += ']\n' + ret.answer.messageContent;
+					answer += '\n\n';
+					answer += '------------------ Question ------------------';
+					answer += '\n\n';
+					
+// 					switch(ret.question.selectionValue){
+// 					case '0' :
+// 						answer += "Problem\n";
+// 						break;
+// 					case '1' :
+// 						answer += "Operation\n";
+// 						break;
+// 					case '2' :
+// 						answer += "System\n";
+// 						break;
+// 					case '3' :
+// 						answer += "Etc.\n";
+// 						break;
+// 					default:
+// 						break;
+// 					}
+					answer += ret.question.messageContent;
+					$('#answerContent').val(answer);
+					document.getElementById("contentMessage").innerHTML = answerMessage;
+					layer_open('answerBox');
+				}
+
+				
+				remainSeconds = ret.remainEtime;
+				displayTimer('remainTime', remainSeconds);
+				
+			},
+			error : function(request, err, ex)
+			{
+				alert(err + " ===> " + ex);
+			}
+		});
+
+		window.setTimeout("tickMinute()", 60 * 1000);
+	};
+
+	// 1초마다 호출
+	function tickSecond()
+	{
+		displayTimer('remainTime', --remainSeconds);
+		if(remainSeconds <= 0)
+		{
+			$("#remainTime").html("00 : 00 : 00");
+			alert("Time is up.\nThank you.")
+			goEndOnTime();
+			return;
+		}
+
+		
+
+		window.setTimeout("tickSecond()", 1000);
+	}
+	
+	//신입 accept 시 타이머 초록색으로
+	function convertTimerColor(timerId){
+		$("#"+timerId).attr("style", "color : #80ff80");
+	}
+
+	$(document).ready(function()
+	{
+		var langCd = initCodeLang('C,P,J'); // 선택가능 언어 셋팅
+		//langCd = ""; // 현업 요청으로 언어 자동 선택 안되게 함. 현업 요청으로 다시 선택되게함.
+
+		// 관리자가 문제 등록시 선택 가능언어로 셋팅하고 응시자가 저장한 값이 있으면 그 값을 셋팅.
+		
+			langCd = "P";
+			prevSelCodeLang = langCd;
+		
+		
+		var chLang;
+	    if(langCd == "J")
+	    {
+	        chLang = "java";
+	    }
+	    else if(langCd == "C")
+	    {
+	        chLang = "c";
+	    }
+	    else if(langCd == "P")
+	    {
+	        chLang = "cpp";
+	    }
+		
+		cEditor = CodeMirror.fromTextArea(document.getElementById("textSource"), {
+	        lineNumbers: true,
+	        styleActiveLine: true,
+	        matchBrackets: true,
+	        smartIndent: true,
+	        indentUnit: 4,
+// 	        extraKeys: {"Ctrl-Space": "autocomplete"},
+	        mode: getLangMode(chLang),
+	        theme: "eclipse",
+		    extraKeys: {
+		      "F11": function(cm) {
+		        cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+		        if (!cm.getOption("fullScreen")) {
+		        	$("#aside").show();
+		        	$("#btnarea").show();
+		        }else {
+		        	$("#aside").hide();
+		        	$("#btnarea").hide();
+		        }
+		      },
+		      "Esc": function(cm) {
+		        if (cm.getOption("fullScreen")) {
+		        	cm.setOption("fullScreen", false);
+		        	$("#aside").show();
+		        	$("#btnarea").show();
+		        }
+		      }
+// 		      "Ctrl-Space": "autocomplete"
+			}
+      	});
+		cEditor.on("change", onEditChange);
+		var langObj = document.getElementsByName("lang");
+		for(var i = 0; i < langObj.length ; i++)
+		{
+		    if(langObj[i].value == langCd)
+		    {
+		    	langObj[i].checked = true;
+		    	
+		    	break;
+		    }
+		}
+	});
+	
+	function getLangMode(lang)
+	{
+		var langMode;
+		
+	    if(lang == "java")
+	    {
+	    	langMode = "text/x-java";
+	    }
+	    else if(lang == "c")
+	    {
+	    	langMode = "text/x-csrc";
+	    }
+	    else if(lang == "cpp")
+	    {
+	    	langMode = "text/x-c++src";
+	    }
+		
+		return langMode;
+	}
+
+	//
+	function initCodeLang(codeLang)
+	{
+	    var langObj = document.getElementsByName("lang");
+
+	    var codeLangSet = "";
+	    var arrCodeLang = codeLang.split(",");
+
+	    // 관리자가 셋팅한 언어만 disable 을 false 시킨다.
+	    for(var i = 0; i < arrCodeLang.length; i++)
+	    {
+	        for(var j = 0; j < langObj.length; j++)
+	        {
+	            if(arrCodeLang[i] == langObj[j].value)
+	            {
+	                langObj[j].disabled = false;
+	            }
+	        }
+	    }
+
+	    // 관리자 문제 등록시 설정한 문제풀기 언어를 가져온다.
+	    // C, C++, Java 순으로 default 셋팅하기위함.
+	    var returnValue = "";
+	    if(codeLang.indexOf("C") != -1)
+	    {
+	        returnValue = "C";
+	    }
+	    else if(codeLang.indexOf("P") != -1)
+	    {
+	        returnValue = "P";
+	    }
+	    else
+	    {
+	        returnValue = "J";
+	    }
+	    return returnValue;
+	}
+
+	// 임시소스 로드
+	function imsiSourceLoad(codeLangCd)
+	{
+	    var params =
+	    {
+	        codeLangCd : codeLangCd,
+	        contestProbId : $("#contestProbId").val()
+	    };
+
+	    var url = contextPath + "/satti/sourceTempLoad.do";
+	    $.ajax(
+	    {
+	        type : "POST",
+	        url : url,
+	        data : params,
+	        async : false,
+	        success : function(ret)
+	        {
+	            if(codeLangCd == ret.lang)
+	            {
+	                if(ret.code)
+	                {
+	                    var code1 = ret.code.split("&lt;").join("<");
+	                    var code2 = code1.split("&gt;").join(">");
+// 	                    $("#textSource").val(code2);
+           				cEditor.setValue(code2);
+	                    isEditChange = false;
+	                }
+	            }
+	        },
+	        error : function(request, err, ex)
+	        {
+	            alert(err + " ===> " + ex);
+	        }
+	    });
+	}
+
+	// 소스창 보이기 여부
+	function displayTextSource(langCd)
+	{
+		if(langCd == "")
+		{
+			$("#textSourceDiv").hide();
+			$("#textInfoDiv").show();
+		}
+		else
+		{
+			$("#textSourceDiv").show();
+			$("#textInfoDiv").hide();
+		}
+	}
+
+// 	editAreaLoader.init({
+// 		id: "textSource"
+// 		,start_highlight: true
+// 		,allow_resize: "y"
+// 		,allow_toggle: false
+// 		,word_wrap: false
+// 		,language: "en"
+// 		,syntax : "cpp"
+// 		,toolbar: "search, go_to_line, |, undo, redo, |, select_font, |, change_smooth_selection, highlight, reset_highlight, |, help"
+// 		,show_line_colors: true
+//     	,change_callback : "onEditChange"
+// 	});
+
+
+
+	// 언어코드 변경
+	function transCodeLangType(codeLang)
+	{
+	    var returnValue = "";
+	    var arrCodeLang = codeLang.split(",");
+
+	    for(var i = 0; i < arrCodeLang.length; i++)
+	    {
+	        if(i == arrCodeLang.length - 1)
+	        {
+	            if(arrCodeLang[i] == "C")
+	            {
+	                returnValue += "*.c";
+	            }
+	            else if(arrCodeLang[i] == "P")
+	            {
+	                returnValue += "*.cpp";
+	            }
+	            else if(arrCodeLang[i] == "J")
+	            {
+	                returnValue += "*.java";
+	            }
+	        }
+	        else
+	        {
+	            if(arrCodeLang[i] == "C")
+	            {
+	                returnValue += "*.c,";
+	            }
+	            else if(arrCodeLang[i] == "P")
+	            {
+	                returnValue += "*.cpp,";
+	            }
+	            else if(arrCodeLang[i] == "J")
+	            {
+	                returnValue += "*.java,";
+	            }
+	        }
+	    }
+
+	    return returnValue;
+	}
+
+	// 편집 스타일 변경
+	function changeStyle(lang)
+	{
+// 	    editAreaLoader.init(
+// 	    {
+// 	        id : "textSource",
+// 	        start_highlight : true,
+// 	        allow_resize : "y",
+// 	        allow_toggle : false,
+// 	        word_wrap : false,
+// 	        language : "en",
+// 	        syntax : lang,
+// 	        toolbar : "search, go_to_line, |, undo, redo, |, select_font, |, change_smooth_selection, highlight, reset_highlight, |, help",
+// 	        show_line_colors : true,
+// 	        change_callback : "onEditChange"
+// 	    });
+// 		cEditor = CodeMirror.fromTextArea(document.getElementById("textSource"), {
+// 	        lineNumbers: true,
+// 	        matchBrackets: true,
+// 	        mode: "text/x-csrc"
+// 	    });
+
+		cEditor.setOption("mode", getLangMode(lang));
+
+	    var langObj = document.getElementsByName("lang");
+	    if(lang == "java")
+	    {
+	        lang = "J";
+	    }
+	    else if(lang == "c")
+	    {
+	        lang = "C";
+	    }
+	    else if(lang == "cpp")
+	    {
+	        lang = "P";
+	    }
+
+	    for(var i = 0; i < langObj.length; i++)
+	    {
+	        if(langObj[i].value == lang)
+	        {
+	            langObj[i].checked = true;
+	            break;
+	        }
+	    }
+	}
+
+	// 사용자 업로드 파일
+	function userAgentCheckReadFile()
+	{
+	    var fileName = window.document.getElementById('fileData').value;
+	    var fileNm = fileName.substr(fileName.lastIndexOf("\\") + 1);
+	    var langType = fileNm.substr(fileNm.lastIndexOf(".") + 1);
+
+	    // 관리자가 지정한 언어로만 파일 업로드 할 수 있게 셋팅
+	    var validFileType = false;
+	    var checkLangType = transCodeLangType('C,P,J');
+	    var arrLangType = checkLangType.split("*.").join("").split(",");
+
+	    if(langType != "")
+	    {
+	        for(var i = 0; i < arrLangType.length; i++)
+	        {
+	            if(langType == arrLangType[i])
+	            {
+	                validFileType = true;
+	            }
+	        }
+	    }
+
+	    if(validFileType)
+	    {
+	        isEditChange = true;
+	        changeStyle(langType);
+	        document.contestForm.target = "sourceTarget";
+	        document.contestForm.action = contextPath + "/satti/contestSourceLoad.do";
+	        document.contestForm.submit();
+
+	        var fileData = window.document.getElementById("fileData");
+	        document.getElementById("fileDiv").removeChild(fileData);
+	        document.getElementById("fileDiv").innerHTML = 'File Attach <input type="file" style="width:500px" name="fileData" id="fileData" onchange="userAgentCheckReadFile();" accept=".java,.c,.cpp"/>';
+	    }
+	    else
+	    {
+	        alert('File type not allowed\nFile type allowed : ' + checkLangType);
+	    }
+	}
+
+	// 마지막 소스로드
+	function lastLangSourceLoad(codeLangCd)
+	{
+	    var params =
+	    {
+	    	codeLangCd : codeLangCd,
+	        contestId : $("#contestId").val(),
+	        contestProbId : $("#contestProbId").val()
+	    };
+
+	    var url = contextPath + "/satti/lastLangSourceLoad.do";
+	    $.ajax(
+	    {
+	        type : "POST",
+	        url : url,
+	        data : params,
+	        async : false,
+	        success : function(ret)
+	        {
+	            if(codeLangCd == ret.lang)
+	            {
+	                if(ret.code)
+	                {
+	                    var code1 = ret.code.split("&lt;").join("<");
+	                    var code2 = code1.split("&gt;").join(">");
+// 	                    $("#textSource").val(code2);
+	            		cEditor.setValue(code2);
+	                    isEditChange = false;
+	                }
+	            }
+	        },
+	        error : function(request, err, ex)
+	        {
+	            alert(err + " ===> " + ex);
+	        }
+	    });
+	}
+
+	function loadInitCodeLang()
+	{
+		var lang;
+		if(!confirm("Are you sure you want to initialize?\nCurrent source code will be removed."))
+        {
+            return false;
+        }
+
+        var langObj = document.getElementsByName("lang");
+        for(var i = 0; i < langObj.length; i++)
+        {
+            if(langObj[i].checked == true)
+            {
+                lang = langObj[i].value;
+            }
+        }
+
+	    var chLang = "";
+	    if(lang == "J")
+	    {
+	        chLang = "java";
+	    }
+	    else if(lang == "C")
+	    {
+	        chLang = "c";
+	    }
+	    else if(lang == "P")
+	    {
+	        chLang = "cpp";
+	    }
+
+	    changeStyle(chLang);
+        imsiSourceLoad(lang);
+	}
+
+	// 언어선택
+	function selectCodeLang(lang)
+	{
+		var lang;
+		if(!confirm("Are you sure you want to initialize?\nCurrent source code will be removed."))
+        {
+            return false;
+        }
+
+        var langObj = document.getElementsByName("lang");
+        for(var i = 0; i < langObj.length; i++)
+        {
+            if(langObj[i].checked == true)
+            {
+                lang = langObj[i].value;
+            }
+        }
+
+	    var chLang = "";
+	    if(lang == "J")
+	    {
+	        chLang = "java";
+	    }
+	    else if(lang == "C")
+	    {
+	        chLang = "c";
+	    }
+	    else if(lang == "P")
+	    {
+	        chLang = "cpp";
+	    }
+
+	    changeStyle(chLang);
+        imsiSourceLoad(lang);
+	}
+
+	function selectCodeLang(lang)
+	{
+  	    if(prevSelCodeLang)
+        {
+            if(confirm("If you change the language, the source code you were working on will be removed."))
+            {
+                prevSelCodeLang = lang;
+            }
+            else
+            {
+                $("input:radio[name=lang][value=" + prevSelCodeLang + "]").attr("checked", "checked");
+                return false;
+            }
+        }
+        else
+        {
+            prevSelCodeLang = lang;
+        }
+
+	    var chLang = "";
+	    if(lang == "J")
+	    {
+	        chLang = "java";
+	    }
+	    else if(lang == "C")
+	    {
+	        chLang = "c";
+	    }
+	    else if(lang == "P")
+	    {
+	        chLang = "cpp";
+	    }
+
+	    changeStyle(chLang);
+	    lastLangSourceLoad(lang);
+	    // imsiSourceLoad(lang);
+	    // displayTextSource(lang);
+	}
+
+	//
+	function clearArea()
+	{
+	    var fileData = document.getElementById('fileData');
+	    if(navigator.userAgent.indexOf("MSIE") != -1)
+	    {
+	        // document.contestForm.reset();
+	    }
+	    else
+	    {
+	        fileData.value = "";
+	    }
+	}
+
+	// 편집창 변경
+	function onEditChange()
+	{
+		isEditChange = true;
+	}
+
+	// 임시저장 처리
+	function onEditSave()
+	{
+// 	    var value = editAreaLoader.getValue("textSource");
+		var value = cEditor.getValue();
+		
+		if(calculate_msglen(value) > 131072){
+		    alert("Your source code  has been exceeded 128KB. You have to write the source code within 128KB.");
+		    return false;
+		}
+
+		
+	    var langObj = document.getElementsByName("lang");
+	    var codeLangCd = "";
+	    for(var i = 0; i < langObj.length; i++)
+	    {
+	        if(langObj[i].checked)
+	        {
+	            codeLangCd = langObj[i].value;
+	            break;
+	        }
+	    }
+
+	    var contestId = document.contestForm.contestId.value;
+	    var contestProbId = document.contestForm.contestProbId.value;
+
+	    var params =
+	    {
+	        submitCode : value,
+	        codeLangCd : codeLangCd,
+	        contestId : contestId,
+	        contestProbId : contestProbId,
+	        solveStatusCd : "T"
+	    };
+
+	    var url = contextPath + "/satti/insertTempSource.do";
+	    $.ajax(
+	    {
+	        type : "POST",
+	        url : url,
+	        data : params,
+	        success : function(ret)
+	        {
+	            if(ret.success == 'Y')
+	            {
+	                isEditChange = false;
+	                alert("Saved.");
+	            }
+	        },
+	        error : function(request, err, ex)
+	        {
+	            hideLoading();
+	            alert(err + " ===> " + ex);
+	        }
+	    });
+
+	    return false;
+	}
+
+	// 컴파일 처리
+	function onEditCompile()
+	{
+// 	    var value = editAreaLoader.getValue("textSource");
+		var value = cEditor.getValue();
+	    if(value == "")
+	    {
+	        //editAreaLoader.setValue("textSource", "");
+	        alert("No source code input");
+	        return false;
+	    }
+	    else
+	    {
+	    	if(calculate_msglen(value) > 131072){
+			    alert("Your source code  has been exceeded 128KB. You have to write the source code within 128KB.");
+			    return false;
+			}
+	    	
+	        var fileData = document.getElementById("fileData");
+	        var fileName = fileData.value;
+	        var langType = "";
+	        if(fileName == "")
+	        {
+	            var langObj = document.getElementsByName("lang");
+	            langType = "";
+	            for(var i = 0; i < langObj.length; i++)
+	            {
+	                if(langObj[i].checked)
+	                {
+	                    langType = langObj[i].value;
+	                    break;
+	                }
+	            }
+	            if(langType == "J")
+	            {
+	                langType = "java";
+	            }
+	            else if(langType == "C")
+	            {
+	                langType = "c";
+	            }
+	            else
+	            {
+	                langType = "cpp";
+	            }
+	        }
+	        else
+	        {
+	            var fileNm = fileName.substr(fileName.lastIndexOf("\\") + 1);
+	            fileName = fileNm.substr(0, fileNm.lastIndexOf("."));
+	            langType = fileNm.substr(fileNm.lastIndexOf(".") + 1);
+	        }
+
+	        var contestId = document.contestForm.contestId.value;
+	        var probId = document.contestForm.contestProbId.value;
+
+	        showLoading(false, contextPath + "/images/common/loading5.gif", 90, 84);
+	        var params =
+	        {
+	            source : value,
+	            langType : langType,
+	            fileName : fileName,
+	            contestId : contestId,
+	            probId : probId
+	        };
+
+	        var url = contextPath + "/satti/compile.do";
+	        $.ajax(
+	        {
+	            type : "POST",
+	            url : url,
+	            data : params,
+	            success : function(ret)
+	            {
+	                hideLoading();
+
+	                // TODO 컴파일 리턴
+	                if(ret.exitValue == "0")
+	                {
+	                    alert("Successfully Compiled.");
+	                }
+	                else
+	                {
+	                    if(ret.exitValue == "H")
+	                    {
+	                        alert(ret.cmpError);
+	                    }
+	                    else if(ret.exitValue == "NS")
+	                    {
+	                        alert("You can only use standard input/output library \nThe library used in next line is not allowed.\n> " + ret.cmpError);
+	                    }
+	                    else if(ret.exitValue == "FI")
+	                    {
+	                        alert("The file input method is used in next line. \n> " + ret.cmpError+"\n(You should just use standard input/output.)");
+	                    }
+	                    else
+	                    {
+	                        alert("Compile Error: \nError Message : \n" + ret.cmpError);
+	                    }
+	                }
+	            },
+	            error : function(request, err, ex)
+	            {
+	                hideLoading();
+	                alert(err + " ===> " + ex);
+	            }
+	        });
+	    }
+	    return false;
+	}
+
+	// 제출 처리
+	function onEditSubmit()
+	{
+	    var contestId = document.contestForm.contestId.value;
+	    var probId = document.contestForm.contestProbId.value;
+
+// 	    var value = editAreaLoader.getValue("textSource");
+	    var value = cEditor.getValue();
+	    if(value == "")
+	    {
+	        alert("No source code input");
+	        return false;
+	    }
+	    
+    	if(calculate_msglen(value) > 131072){
+		    alert("Your source code  has been exceeded 128KB. You have to write the source code within 128KB.");
+		    return false;
+		}
+
+	    var fileData = document.getElementById("fileData");
+	    var fileName = fileData.value;
+	    var langType = "";
+	    if(fileName == "")
+	    {
+	        var langObj = document.getElementsByName("lang");
+	        langType = "";
+
+	        for(var i = 0; i < langObj.length; i++)
+	        {
+	            if(langObj[i].checked)
+	            {
+	                langType = langObj[i].value;
+	                break;
+	            }
+	        }
+
+	        if(langType == "J")
+	        {
+	            langType = "java";
+	        }
+	        else if(langType == "C")
+	        {
+	            langType = "c";
+	        }
+	        else
+	        {
+	            langType = "cpp";
+	        }
+	    }
+	    else
+	    {
+	        var fileNm = fileName.substr(fileName.lastIndexOf("\\") + 1);
+	        fileName = fileNm.substr(0, fileNm.lastIndexOf("."));
+	        langType = fileNm.substr(fileNm.lastIndexOf(".") + 1);
+	    }
+
+	    var params =
+	    {
+	        source : value,
+	        langType : langType,
+	        fileName : fileName,
+	        contestId : contestId,
+	        probId : probId
+	    };
+
+	    showLoading(false, contextPath + "/images/common/loading5.gif", 90, 84);
+
+	    var url = contextPath + "/satti/compile.do";
+	    $.ajax(
+	    {
+	        type : "POST",
+	        url : url,
+	        data : params,
+	        success : function(ret)
+	        {
+	            hideLoading();
+
+	            // TODO 컴파일 리턴
+	            if(ret.exitValue == "0")
+	            {
+	                alert("Successfully Compiled.");
+	                if(!confirm("Submission chance will reduce by 1.\nAre you sure you want to submit?"))
+	                {
+	                    return false;
+	                }
+	                $("#btnarea").hide();
+	                showLoading(false, contextPath + "/images/common/loading5.gif", 90, 84);
+	                url = contextPath + "/satti/submit.do";
+	                $.ajax(
+	                {
+	                    type : "POST",
+	                    url : url,
+	                    data : params,
+	                    success : function(ret)
+	                    {
+	                        hideLoading();
+	                        $("#btnarea").show();
+	                        processSubmit(ret);
+	                    },
+	                    error : function(request, err, ex)
+	                    {
+	                        hideLoading();
+	                        $("#btnarea").show();
+	                        alert(err + " ===> " + ex);
+	                    }
+	                });
+	                return false;
+	            }
+	            else
+	            {
+	                if(ret.exitValue == "H")
+	                {
+	                    alert(ret.cmpError);
+	                    return false;
+	                }
+	                else if(ret.exitValue == "NS")
+	                {
+	                    alert("You can only use standard input/output library \nThe library used in next line is not allowed.\n >" + ret.cmpError);
+	                    return false;
+	                }
+                    else if(ret.exitValue == "FI")
+                    {
+                        alert("The file input method is used in next line. \n> " + ret.cmpError+"\n(You should just use standard input/output.)");
+                    }
+	                else
+	                {
+	                    alert("Compile Error: \nError Message : \n" + ret.cmpError);
+	                    return false;
+	                }
+	            }
+	        },
+	        error : function(request, err, ex)
+	        {
+	            hideLoading();
+	            alert(err + " ===> " + ex);
+	            return false;
+	        }
+	    });
+	    return false;
+	}
+
+	// 제출 리턴처리
+	function processSubmit(ret)
+	{
+	    // 제출 리턴
+// 	    if(ret.cmpError != "")
+// 	    {
+// 	        if(ret.exitValue == "H")
+// 	        {
+// 	            alert(ret.cmpError);
+// 	        }
+// 	        else if(ret.exitValue == "NS")
+// 	        {
+// 	            alert("You can only use standard input/output library \nThe library used in next line is not allowed.\n >" + ret.cmpError);
+// 	        }
+// 	        else
+// 	        {
+// 	            alert("Fail \n(Compile error) :\nError Message:\n" + ret.cmpError);
+
+	            //compile 은 되나 warning 일경우
+// 	            if(ret.runValue != "")
+// 	            {
+// 	                alert(ret.runValue);
+// 	            }
+// 	        }
+
+// 	        goProblemAfterSubmit();
+// 	        return false;
+// 	    }
+	    var failString = "Fail";
+	    if('IG' == 'IT'){
+	    	failString = "The result using system input is fail.";
+	    }
+		
+	    if(ret.submitFailed != "")
+	    {
+	        //submit 불가능한 경우
+	        var submitFailStr = "";
+	        if(ret.submitFailed == "ES")
+	        {
+	            submitFailStr = "No more submission chance";
+		        alert("Unable to submit. \n" + submitFailStr);
+		        goContestAfterSubmit();
+	        }
+	        else if(ret.submitFailed == "TU")
+	        {
+	            submitFailStr = "Time is up.";
+		        alert("Unable to submit. \n" + submitFailStr);
+		        goContestAfterSubmit();
+	        }
+	        else if(ret.submitFailed == "AP")
+	        {
+	            submitFailStr = "You've already passed.";
+		        alert("Unable to submit. \n" + submitFailStr);
+		        goContestAfterSubmit();
+	        }
+	    }
+	    
+	    
+	    if(ret.runError != "" 
+	    		&& (ret.usrScore == "0" || ret.usrScore == "" || ret.usrScore == "0.0"))
+	    {
+	        //alert("실패 \n (오답)");
+	        if(ret.runError.indexOf("Memory Limit Exceeded") != -1 )
+	        {
+	        	alert(failString + "\nMain reason for this error is 'memory limit exceeded'.");
+	        }
+	        else 
+	        {
+	        	alert(failString + "\n(Runtime error)\nError Message:\n" + ret.runError);
+	        }
+	        goProblemAfterSubmit();
+	        return false;
+	    }
+	    
+	    if(ret.runValue != "")
+	    {
+		    if(ret.timeOut != "" && ret.runValue.indexOf("Fail") != -1 
+		    		&& (ret.usrScore == "0" || ret.usrScore == "" || ret.usrScore == "0.0"))
+		    {
+		        //alert("실패 \n(" + ret.timeOut + " !)");
+		        alert(failString + "\n(Time limit exceed.)");
+		        goProblemAfterSubmit();
+		        return false;
+		    }
+		    
+	        //alert(ret.runValue);
+	        if(ret.runValue.indexOf("Accept") != -1 && (ret.usrScore != "0" || ret.usrScore != ""))
+	        {
+	            if('IG' == 'IT')
+	            {
+	                alert("Pass");
+	                goContestAfterSubmit();
+	                return false;
+	            }
+	            else
+	            {
+	            	var successMessage = "Your solution got an 'Accept'!";
+            		successMessage += "\n\n";
+            		if(ret.testCaseNo == null || ret.testCaseNo == "0" || ret.testCaseNo == "")
+            		{
+            			if('IG' == 'IG')
+            			{
+            				successMessage += "Points acquired : " + ret.usrScore +" out of 100.0\n\n";
+            			}
+            			else
+            			{
+            				successMessage += "Points acquired : " + ret.comScore +" out of "+ret.probScore+"\n\n";
+            			}
+            		}
+            		else
+            		{
+            			successMessage += "" + ret.correctedCases +" cases were correct out of  "+ ret.testCaseNo + " sample test cases.\n\n";
+            		}
+            		
+            		if((ret.usrScore != "100" && ret.usrScore != "100.0")){
+	            		if(ret.timeOut != "" ) {
+	            			successMessage += "Time out! Some test cases can not be scored by it.\n\n";
+	            		}else if(ret.runError != "") {
+	            			successMessage += "Runtime error! Some test cases can not be scored by it.\n";
+	            			successMessage += "Error Message :\n";
+	            			successMessage += ret.runError.substring(0,255);
+	            			successMessage += "\n\n";
+	            		}
+            		}
+            		
+            		successMessage += "This result above is provided with the aim of giving assistance for debugging and optimization.\n";
+	            	successMessage += "The final score will be calculated with the evaluation input data, and the final score may differ from the result above.\n";
+	            	successMessage += "The evaluation input includes data that require an enhanced level of exception handling, and it has a larger number of test cases.";
+            
+	                alert(successMessage);
+	                goProblemAfterSubmit();
+	                return false;
+	            }
+	        }
+	        else
+	        {
+	        	var usrScore = ret.usrScore;
+	        	if(usrScore == "" || usrScore == null){
+	        		usrScore = "0";
+	        	}
+	            //alert(ret.runValue);
+	            failString += "\n(Wrong answer";
+
+//            		if(('IG' != 'IT')
+//            				&& (ret.testCaseNo != null && ret.testCaseNo != "0" && ret.testCaseNo != ""))
+       			if((ret.testCaseNo != null && ret.testCaseNo != "0" && ret.testCaseNo != ""))
+       			{
+           			failString += " : " + ret.correctedCases +" cases were correct out of  "+ ret.testCaseNo + " sample test cases.";
+       			}else{
+   	            	failString += ": "+ usrScore +" / 100.0";
+       			}	
+	            failString += ")";
+        		
+	            if(ret.timeOut != "") {
+	            	failString += "\nTime out! Some test cases can not be scored by it.\n";
+        		}else if(ret.runError != "") {
+        			failString += "\nRuntime error! Some test cases can not be scored by it.\n";
+        			failString += "Error Message :\n";
+        			failString += ret.runError.substring(0,255);
+        			failString += "\n\n";
+        		}
+	            
+	            alert(failString);
+	            goProblemAfterSubmit();
+	            return false;
+	        }
+	    }
+	}
+
+	// 문제목록화면 이동
+	function goContest()
+	{
+	    if(checkEditChangeConfirm())
+	    {
+	        document.MainForm.action = "/common/satti/contest.do";
+	        document.MainForm.submit();
+	    }
+	    else
+	    {
+	        return false;
+	    }
+	}
+
+	// 제출후 문제목록 화면이동
+	function goContestAfterSubmit()
+	{
+	    isEditChange = false;
+
+	    contestForm.target = "";
+	    contestForm.method = "post";
+	    contestForm.contestId.value = "AYDbNBbvDGkAAAGL";
+	    contestForm.action = "/common/satti/contest.do";
+	    contestForm.submit();
+	}
+
+	// 제출후 문제풀기 화면이동
+	function goProblemAfterSubmit()
+	{
+	    isEditChange = false;
+
+	    MainForm.target = "";
+	    MainForm.method = "post";
+	    MainForm.contestId.value = "AYDbNBbvDGkAAAGL";
+	    MainForm.contestProbId.value = "AVkVYljvfoAAAAFG";
+	    MainForm.action = "/common/satti/problem.do";
+	    MainForm.submit();
+	}
+
+	// 응시종료
+	function goEndOnTime()
+	{
+		document.MainForm.contestId.value = "AYDbNBbvDGkAAAGL";
+	    document.MainForm.action = "/common/satti/end.do";
+	    document.MainForm.submit();
+	}
+	
+	function layer_open(el){
+		//$('.layer').addClass('open');
+		$('#bg').height($('#wrap').height());
+		$('#bg').width($('#wrap').width());
+		$('#bg').fadeIn();
+		$('#answerLayer').fadeIn();
+		var temp = $('#' + el);
+		if (temp.outerHeight() < $(document).height() ) temp.css('margin-top', '-'+temp.outerHeight()/2+'px');
+		else temp.css('top', '0px');
+		if (temp.outerWidth() < $(document).width() ) temp.css('margin-left', '-'+temp.outerWidth()/2+'px');
+		else temp.css('left', '0px');
+	}
+	
+	function fn_answerLayerClose(){
+		$('#answerLayer').fadeOut();
+		$('#bg').fadeOut();
+		
+		return false;
+	}
+	
+	function pop_aboutEditor()
+	{
+		var url = "/common/satti/pop_aboutEditor.do?";
+		window.open(url,'abouteditor','top=100,left=350,width=370, height=314,scrollbars=yes,status=0,resizable=yes,menubar=0,toolbar=0,location=0,titlebar=0,directories=0,addressbar:0');
+	}
+	
+	function calculate_msglen(msg)
+	{
+	    var nbytes = 0;
+	    
+	    for (var i=0; i<msg.length; i++) {
+	     	
+	    	var ch = msg.charAt(i);
+	    	
+	     	if(escape(ch).length > 4) {
+	        	nbytes += 2;
+	     	} else if (ch == '\n') {
+	      		if (msg.charAt(i-1) != '\r') {
+	       			nbytes += 1;
+	     		}
+	     	} else {
+	     		nbytes += 1;
+	     	}
+	    }
+	    return nbytes;
+	}
+</script>
+
+
+<form id="MainForm" name="MainForm" action="http://107.113.168.240/common/satti/problem.do" method="post" autocomplete="off">
+	<input type="hidden" name="contestId" id="contestId" value="AYDbNBbvDGkAAAGL">
+	<input type="hidden" name="contestProbId" id="contestProbId" value="AVkVYljvfoAAAAFG">
+	<input type="hidden" name="isPostMethod" value="Y">
+	<input type="hidden" name="do_url" value="/common/satti/problem.do">
+</form>
+
+<form name="contestForm" method="post" action="http://107.113.168.240/satti/contestSourceLoad.do" enctype="multipart/form-data" autocomplete="off">
+	<input type="hidden" name="contestId" value="AYDbNBbvDGkAAAGL">
+	<input type="hidden" name="contestProbId" value="AVkVYljvfoAAAAFG">
+	<input type="hidden" name="isPostMethod" value="Y">
+
+	<div id="wrap">
+
+		
+			<!-- globalmenu start -->
+		<ul class="globalmenu" style="position: fixed; float: right;">
+			<li class="user">vucongtuan2810@gmail.com(031200008485)</li>
+			
+			
+				<li><a href="javascript:;" onclick="changeLang(&#39;ko&#39;)"><img src="./MoutainWaking_files/kr.png" alt=""></a></li>
+				<li><img src="./MoutainWaking_files/eng_on.png" alt=""></li>
+			
+		</ul>
+		<!-- globalmenu end -->
+
+		
+		<!-- aside start -->
+		<div id="aside">
+			<h1>SW Certificate System</h1>
+			<ul class="utily" style="border-bottom: 0px;">
+			   	<li style="float:none;"><a href="javascript:;" onclick="pop_guide(&#39;AYDbNBbvDGkAAAGL&#39;)">Rule &amp; Guide</a></li>
+			</ul>
+			<ul class="utily" style="margin-top: 0px; border-bottom: 0px; border-top: 0px;">
+				<li style="float:none;"><a href="javascript:;" onclick="pop_faq(&#39;AYDbNBbvDGkAAAGL&#39;)">FAQ</a></li>
+			</ul>
+		
+			<ul class="utily" style="margin-top: 0px; border-top: 0px; border-bottom: 0px;">
+				<li style="float:none;"><a href="javascript:;" onclick="guideViewer(&#39;en&#39;,&#39;IG&#39;)">Manual</a></li>
+			</ul>
+			
+			<ul class="utily" style="margin-top: 0px; border-top: 0px; border-bottom: 0px;">
+				<li style="float:none;"><a href="javascript:;" onclick="pop_notice_list(&#39;AYDbNBbvDGkAAAGL&#39;)">Notice List</a></li>
+			</ul>
+			
+			<ul class="utily" style="margin-top: 0px; border-top: 0px; padding-bottom: 5px;">
+				<li><a href="javascript:;" onclick="pop_qna(&#39;AYDbNBbvDGkAAAGL&#39;)">Q&amp;A</a></li>
+				<li><a href="javascript:;" onclick="pop_qna_list(&#39;AYDbNBbvDGkAAAGL&#39;)">Q&amp;A List</a></li>
+			</ul>
+			
+			<dl class="time">
+				<dt>Test Time(Server-Based)</dt>
+				<dd>2022-05-19 14:27 ~ 14:27</dd>
+			</dl>
+			<dl class="time_all">
+				<dt>Remaining Time</dt>
+				<dd id="remainTime">451 : 52 : 36</dd>
+			</dl>
+
+			<!-- 신입의 경우에 문제별 경과 시간 표시 -->
+			
+
+			<!-- 현재상황 : 보통 문제1에서 3번까지 표시 -->
+			<dl class="status">
+				<dt>Current Status</dt>
+				<dd>
+					<ul>
+						
+							<li>Level 4(2/99)
+							
+								
+								
+									<span class="fail">Fail</span>
+								
+							
+							</li>
+						
+
+						
+							<li>Level 4(4/99)
+							
+								
+									
+									
+										<span class="pass">Accept</span>
+									
+								
+								
+							
+							</li>
+						
+
+						
+							<li>Level 4(1/99)
+							
+								
+									
+									
+										<span class="pass">Accept</span>
+									
+								
+								
+							
+							</li>
+						
+
+						
+							<li>Level 4(2/99)
+							
+								
+									
+									
+										<span class="pass">Accept</span>
+									
+								
+								
+							
+							</li>
+						
+
+						
+							<li>Level 4(1/99)
+								
+									
+										
+										
+											<span class="pass">Accept</span>
+										
+									
+									
+								
+							</li>
+						
+					</ul>
+				</dd>
+			</dl>
+			<p class="footer"></p>
+		</div>
+		<!-- aside end -->
+
+		<div id="container">
+
+			
+			<h2>2022 May,
+			
+				1st
+			
+			
+			[Level Test] SW FS Batch 2_Class 2 2022</h2>
+			
+
+			
+			<div class="warning" style="text-align: left;margin-bottom: 10px;">
+				<p>
+				
+				</p>
+			</div>
+			<div class="box_qu">
+				<span class="rank4">Level 4 </span>
+				<br>
+				<dl>
+					<dt>Mountain Walking</dt>
+					
+					
+						<dd><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt;"><font color="#000000">Cho
+một bản đồ kích thước NxN (2 &lt;= N &lt;= 100), mỗi ô mang giá trị là độ cao của
+ô đó (0 &lt;= độ cao &lt;= 110). Bác John và bò Bessie đang ở ô trên trái (dòng
+1, cột 1) và muốn đi đến cabin (dòng N, cột N). Họ có thể đi sang phải, trái,
+lên trên và xuống dưới nhưng không thể đi theo đường chéo. Hãy giúp bác John và
+bò Bessie tìm đường đi sao cho chênh lệch giữa điểm cao nhất và thấp nhất trên đường
+đi là nhỏ nhất.</font></span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt;"><font color="#000000">&nbsp;</font></span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><b style="mso-bidi-font-weight: normal;"><span style="line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt;"><font color="#000000">Input</font></span></b></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt;"><font color="#000000">Dòng
+1: Số test case </font></span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt;"><font color="#000000">Dòng
+2: N</font></span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt;"><font color="#000000">N
+dòng tiếp theo chứa N số nguyên, mỗi số cho biết cao độ của một ô.</font></span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt;"><font color="#000000">&nbsp;</font></span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><b style="mso-bidi-font-weight: normal;"><span style="line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt;"><font color="#000000">Output</font></span></b></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt;"><font color="#000000">In
+ra #test case và một số nguyên là chênh lệch độ cao nhỏ nhất.</font></span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt;"><font color="#000000">&nbsp;</font></span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><b style="mso-bidi-font-weight: normal;"><span style="line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt;"><font color="#000000">Sample</font></span></b></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt;"><font color="#000000">&nbsp;</font></span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><b><span style="color: rgb(51, 51, 51); line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt;">Input</span></b></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="color: rgb(51, 51, 51); line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt; mso-bidi-font-weight: bold;">5</span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="color: rgb(51, 51, 51); line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt; mso-bidi-font-weight: bold;">5</span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="color: rgb(51, 51, 51); line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt; mso-bidi-font-weight: bold;">1 1 3 6 8</span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="color: rgb(51, 51, 51); line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt; mso-bidi-font-weight: bold;">1 2 2 5 5</span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="color: rgb(51, 51, 51); line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt; mso-bidi-font-weight: bold;">4 4 0 3 3</span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="color: rgb(51, 51, 51); line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt; mso-bidi-font-weight: bold;">8 0 2 3 4</span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="color: rgb(51, 51, 51); line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt; mso-bidi-font-weight: bold;">4 3 0 2 1</span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="color: rgb(51, 51, 51); line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt; mso-bidi-font-weight: bold;">5<a name="_GoBack"></a></span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="color: rgb(51, 51, 51); line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt; mso-bidi-font-weight: bold;">99 85 38 22 55 </span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="color: rgb(51, 51, 51); line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt; mso-bidi-font-weight: bold;">89 28 33 3 65 </span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="color: rgb(51, 51, 51); line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt; mso-bidi-font-weight: bold;">99 20 14 67 90 </span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="color: rgb(51, 51, 51); line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt; mso-bidi-font-weight: bold;">36 27 28 77 31 </span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="color: rgb(51, 51, 51); line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt; mso-bidi-font-weight: bold;">50 45 12 9 14 </span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="color: rgb(51, 51, 51); line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt; mso-bidi-font-weight: bold;">2</span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="color: rgb(51, 51, 51); line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt; mso-bidi-font-weight: bold;">92 83 </span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="color: rgb(51, 51, 51); line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt; mso-bidi-font-weight: bold;">19 91 </span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="color: rgb(51, 51, 51); line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt; mso-bidi-font-weight: bold;">5</span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="color: rgb(51, 51, 51); line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt; mso-bidi-font-weight: bold;">61 49 32 34 28 </span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="color: rgb(51, 51, 51); line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt; mso-bidi-font-weight: bold;">100 65 0 10 89 </span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="color: rgb(51, 51, 51); line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt; mso-bidi-font-weight: bold;">34 99 40 86 4 </span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="color: rgb(51, 51, 51); line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt; mso-bidi-font-weight: bold;">10 97 49 21 30 </span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="color: rgb(51, 51, 51); line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt; mso-bidi-font-weight: bold;">95 33 79 51 65 </span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="color: rgb(51, 51, 51); line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt; mso-bidi-font-weight: bold;">2</span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="color: rgb(51, 51, 51); line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt; mso-bidi-font-weight: bold;">17 60 </span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="color: rgb(51, 51, 51); line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt; mso-bidi-font-weight: bold;">94 27</span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="color: rgb(51, 51, 51); line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt;">&nbsp;</span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><b><span style="color: rgb(51, 51, 51); line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt;">Output</span></b></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="color: rgb(51, 51, 51); line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt;">#1 2</span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="color: rgb(51, 51, 51); line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt;">#2 85</span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="color: rgb(51, 51, 51); line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt;">#3 9</span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="color: rgb(51, 51, 51); line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt;">#4 50</span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="color: rgb(51, 51, 51); line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt;">#5 43</span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><p style="margin: 0in 0in 0pt;"><span style="line-height: 115%; font-family: &quot;Times New Roman&quot;,&quot;serif&quot;; font-size: 12pt;"><font color="#000000">&nbsp;</font></span></p><font color="#000000" face="Times New Roman" size="3">
+
+</font><br></dd>
+					
+					
+				</dl>
+
+				<dl class="lang">
+					<dt>Sample Input : </dt>
+					<dd><a href="http://107.113.168.240/common/satti/contestProb/contestProbDown.do?downType=in&amp;contestProbId=AVkVYljvfoAAAAFG" style="text-decoration: underline;font-weight: normal;">eval_input.txt</a></dd>
+					<dt></dt>
+					<dd><a href="javascript:;" onclick="pop_sampleInput(&#39;AVkVYljvfoAAAAFG&#39;)" style="text-decoration: underline;font-weight: normal;">sample_input pop-up</a></dd>
+				</dl>
+
+<!-- 					<dl class="lang"> -->
+<!-- 						<dt>Sample Output : </dt> -->
+
+<!-- 					</dl> -->
+
+
+				<dl class="lang">
+					<dt>Language</dt>
+					<dd>
+						<input type="radio" value="C" id="lang" name="lang" onclick="selectCodeLang(&#39;C&#39;);">C(gcc-4.6.3)
+						<input type="radio" value="P" id="lang" name="lang" onclick="selectCodeLang(&#39;P&#39;);">C++(gcc-4.6.3)
+						<input type="radio" value="J" id="lang" name="lang" onclick="selectCodeLang(&#39;J&#39;);">Java(java-1.6.0_12)
+						<input type="button" onclick="loadInitCodeLang();" value="  Initialize the source code ">
+						<input type="button" onclick="pop_aboutEditor();" value="  Shortcuts for Web Editor ">
+					</dd>
+				</dl>
+
+				<div class="count">
+					<table>
+						<thead>
+							<tr>
+								<th colspan="3">Try Count <strong>1</strong> / Total Count<strong>&nbsp;99</strong></th>
+							</tr>
+							<tr>
+								<th><p>Time of submission</p></th>
+								<th><p>Solution</p></th>
+								<th>Result</th>
+							</tr>
+						</thead>
+						<tbody>
+							
+							<tr>
+								<td>18:08:18</td>
+								<td><a href="http://107.113.168.240/common/satti/problem.do#" class="btno_code" onclick="pop_code(&#39;AYDbNBbvDGkAAAGL&#39;,&#39;AVkVYljvfoAAAAFG&#39;, &#39;AYGAzI6fQtwAAAGL&#39;); return false;"><span>Code</span> </a></td>
+								
+									
+										<td>
+											<span class="pass">Accept</span>
+										</td>
+									
+									
+									
+									
+									
+								
+								
+							</tr>
+							
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<div class="box_explain" id="textSourceDiv">
+				<table class="table_view" width="100%">
+					<colgroup><col width="100%">
+					<col>
+					</colgroup><tbody><tr>
+						<td colspan="2" style="padding-bottom:0">
+							<div class="edit_box">
+								<textarea id="textSource" style="height: 500px; width: 100%; display: none;" name="textSource" class="text_area">#include&lt;iostream&gt;
+#define FOR(i,a,b) for(int i=a;i&lt;=b;i++)
+
+int kt,mt[200][200],lon,nho,rear,front,que[100000],vis[200][200],kq;
+int dx[4]={-1,0,0,1};int dy[4]={0,-1,1,0};
+using namespace std;
+void Push(int a) {que[++rear]=a;}
+int Pop(){return que[front++];}
+bool isE(){return (front&gt;rear);}
+bool diduoc(int x)
+{
+    FOR(gt,nho,lon-x)
+{
+	if(mt[1][1]&lt;gt||mt[1][1]&gt;gt+x) continue;
+	FOR(i,1,kt) FOR(j,1,kt) vis[i][j]=0;
+	rear=-1;front=0;
+	Push(1);Push(1);
+	vis[1][1]=1;
+	while(!isE())
+	{
+		int a=Pop();
+		int b=Pop();
+		if(a==kt&amp;&amp;b==kt) return true;
+		FOR(i,0,3)
+		{
+			int ha=a+dx[i];int co=b+dy[i];
+			if(ha&lt;1||co&lt;1||ha&gt;kt||co&gt;kt||mt[ha][co]&lt;gt||mt[ha][co]&gt;gt+x||vis[ha][co]==1) continue;
+			Push(ha);Push(co);vis[ha][co]=1;
+		}
+	}
+}
+	return false;
+}
+int main()
+{
+	int TC;
+	//freopen("inp.txt","r",stdin);
+	cin&gt;&gt;TC;
+	FOR(t,1,TC)
+	{
+
+		cin&gt;&gt;kt;lon=-1;nho=100000;
+		FOR(i,1,kt)
+		FOR(j,1,kt)
+		{cin&gt;&gt;mt[i][j];
+		if(lon&lt;mt[i][j]) lon=mt[i][j];
+		if(nho&gt;mt[i][j]) nho=mt[i][j];
+		}
+		int l=0,r=lon-nho,mid;
+		while(r&gt;=l)
+		{
+			mid=(r+l)/2;
+			if (!diduoc(mid)) l=mid+1;
+			else {r=mid-1;kq=mid;}
+		}
+		cout&lt;&lt;"#"&lt;&lt;t&lt;&lt;" "&lt;&lt;kq&lt;&lt;endl;
+	}
+	return 0;
+}</textarea><div class="CodeMirror cm-s-eclipse"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 6.40002px; left: 33px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; padding: 0px; width: 1000px; height: 1em; outline: none; font-size: 4px;"></textarea></div><div class="CodeMirror-hscrollbar" style="left: 29px;"><div style="height: 1px; width: 0px;"></div></div><div class="CodeMirror-vscrollbar" style="display: block; bottom: 0px;"><div style="width: 1px; height: 1188px;"></div></div><div class="CodeMirror-scrollbar-filler"></div><div class="CodeMirror-gutter-filler"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="min-width: 607.487px; margin-left: 29px; min-height: 1188px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines"><div style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1; display: none;"></div><div class="CodeMirror-code" style=""><div class="CodeMirror-activeline" style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">1</div></div><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><pre><span class="cm-meta">#include&lt;iostream&gt;</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">2</div></div><pre><span class="cm-meta">#define FOR(i,a,b) for(int i=a;i&lt;=b;i++)</span></pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">3</div></div><pre>&nbsp;</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">4</div></div><pre><span class="cm-keyword">int</span> <span class="cm-variable">kt</span>,<span class="cm-variable">mt</span>[<span class="cm-number">200</span>][<span class="cm-number">200</span>],<span class="cm-variable">lon</span>,<span class="cm-variable">nho</span>,<span class="cm-variable">rear</span>,<span class="cm-variable">front</span>,<span class="cm-variable">que</span>[<span class="cm-number">100000</span>],<span class="cm-variable">vis</span>[<span class="cm-number">200</span>][<span class="cm-number">200</span>],<span class="cm-variable">kq</span>;</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">5</div></div><pre><span class="cm-keyword">int</span> <span class="cm-variable">dx</span>[<span class="cm-number">4</span>]<span class="cm-operator">=</span>{<span class="cm-operator">-</span><span class="cm-number">1</span>,<span class="cm-number">0</span>,<span class="cm-number">0</span>,<span class="cm-number">1</span>};<span class="cm-keyword">int</span> <span class="cm-variable">dy</span>[<span class="cm-number">4</span>]<span class="cm-operator">=</span>{<span class="cm-number">0</span>,<span class="cm-operator">-</span><span class="cm-number">1</span>,<span class="cm-number">1</span>,<span class="cm-number">0</span>};</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">6</div></div><pre><span class="cm-keyword">using</span> <span class="cm-keyword">namespace</span> <span class="cm-variable">std</span>;</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">7</div></div><pre><span class="cm-keyword">void</span> <span class="cm-variable">Push</span>(<span class="cm-keyword">int</span> <span class="cm-variable">a</span>) {<span class="cm-variable">que</span>[<span class="cm-operator">++</span><span class="cm-variable">rear</span>]<span class="cm-operator">=</span><span class="cm-variable">a</span>;}</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">8</div></div><pre><span class="cm-keyword">int</span> <span class="cm-variable">Pop</span>(){<span class="cm-keyword">return</span> <span class="cm-variable">que</span>[<span class="cm-variable">front</span><span class="cm-operator">++</span>];}</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">9</div></div><pre><span class="cm-keyword">bool</span> <span class="cm-variable">isE</span>(){<span class="cm-keyword">return</span> (<span class="cm-variable">front</span><span class="cm-operator">&gt;</span><span class="cm-variable">rear</span>);}</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">10</div></div><pre><span class="cm-keyword">bool</span> <span class="cm-variable">diduoc</span>(<span class="cm-keyword">int</span> <span class="cm-variable">x</span>)</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">11</div></div><pre>{</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">12</div></div><pre>    <span class="cm-variable">FOR</span>(<span class="cm-variable">gt</span>,<span class="cm-variable">nho</span>,<span class="cm-variable">lon</span><span class="cm-operator">-</span><span class="cm-variable">x</span>)</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">13</div></div><pre>{</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">14</div></div><pre><span class="cm-tab">    </span><span class="cm-keyword">if</span>(<span class="cm-variable">mt</span>[<span class="cm-number">1</span>][<span class="cm-number">1</span>]<span class="cm-operator">&lt;</span><span class="cm-variable">gt</span><span class="cm-operator">||</span><span class="cm-variable">mt</span>[<span class="cm-number">1</span>][<span class="cm-number">1</span>]<span class="cm-operator">&gt;</span><span class="cm-variable">gt</span><span class="cm-operator">+</span><span class="cm-variable">x</span>) <span class="cm-keyword">continue</span>;</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">15</div></div><pre><span class="cm-tab">    </span><span class="cm-variable">FOR</span>(<span class="cm-variable">i</span>,<span class="cm-number">1</span>,<span class="cm-variable">kt</span>) <span class="cm-variable">FOR</span>(<span class="cm-variable">j</span>,<span class="cm-number">1</span>,<span class="cm-variable">kt</span>) <span class="cm-variable">vis</span>[<span class="cm-variable">i</span>][<span class="cm-variable">j</span>]<span class="cm-operator">=</span><span class="cm-number">0</span>;</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">16</div></div><pre><span class="cm-tab">    </span><span class="cm-variable">rear</span><span class="cm-operator">=-</span><span class="cm-number">1</span>;<span class="cm-variable">front</span><span class="cm-operator">=</span><span class="cm-number">0</span>;</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">17</div></div><pre><span class="cm-tab">    </span><span class="cm-variable">Push</span>(<span class="cm-number">1</span>);<span class="cm-variable">Push</span>(<span class="cm-number">1</span>);</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">18</div></div><pre><span class="cm-tab">    </span><span class="cm-variable">vis</span>[<span class="cm-number">1</span>][<span class="cm-number">1</span>]<span class="cm-operator">=</span><span class="cm-number">1</span>;</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">19</div></div><pre><span class="cm-tab">    </span><span class="cm-keyword">while</span>(<span class="cm-operator">!</span><span class="cm-variable">isE</span>())</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">20</div></div><pre><span class="cm-tab">    </span>{</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">21</div></div><pre><span class="cm-tab">    </span><span class="cm-tab">    </span><span class="cm-keyword">int</span> <span class="cm-variable">a</span><span class="cm-operator">=</span><span class="cm-variable">Pop</span>();</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">22</div></div><pre><span class="cm-tab">    </span><span class="cm-tab">    </span><span class="cm-keyword">int</span> <span class="cm-variable">b</span><span class="cm-operator">=</span><span class="cm-variable">Pop</span>();</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">23</div></div><pre><span class="cm-tab">    </span><span class="cm-tab">    </span><span class="cm-keyword">if</span>(<span class="cm-variable">a</span><span class="cm-operator">==</span><span class="cm-variable">kt</span><span class="cm-operator">&amp;&amp;</span><span class="cm-variable">b</span><span class="cm-operator">==</span><span class="cm-variable">kt</span>) <span class="cm-keyword">return</span> <span class="cm-atom">true</span>;</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">24</div></div><pre><span class="cm-tab">    </span><span class="cm-tab">    </span><span class="cm-variable">FOR</span>(<span class="cm-variable">i</span>,<span class="cm-number">0</span>,<span class="cm-number">3</span>)</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">25</div></div><pre><span class="cm-tab">    </span><span class="cm-tab">    </span>{</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">26</div></div><pre><span class="cm-tab">    </span><span class="cm-tab">    </span><span class="cm-tab">    </span><span class="cm-keyword">int</span> <span class="cm-variable">ha</span><span class="cm-operator">=</span><span class="cm-variable">a</span><span class="cm-operator">+</span><span class="cm-variable">dx</span>[<span class="cm-variable">i</span>];<span class="cm-keyword">int</span> <span class="cm-variable">co</span><span class="cm-operator">=</span><span class="cm-variable">b</span><span class="cm-operator">+</span><span class="cm-variable">dy</span>[<span class="cm-variable">i</span>];</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">27</div></div><pre><span class="cm-tab">    </span><span class="cm-tab">    </span><span class="cm-tab">    </span><span class="cm-keyword">if</span>(<span class="cm-variable">ha</span><span class="cm-operator">&lt;</span><span class="cm-number">1</span><span class="cm-operator">||</span><span class="cm-variable">co</span><span class="cm-operator">&lt;</span><span class="cm-number">1</span><span class="cm-operator">||</span><span class="cm-variable">ha</span><span class="cm-operator">&gt;</span><span class="cm-variable">kt</span><span class="cm-operator">||</span><span class="cm-variable">co</span><span class="cm-operator">&gt;</span><span class="cm-variable">kt</span><span class="cm-operator">||</span><span class="cm-variable">mt</span>[<span class="cm-variable">ha</span>][<span class="cm-variable">co</span>]<span class="cm-operator">&lt;</span><span class="cm-variable">gt</span><span class="cm-operator">||</span><span class="cm-variable">mt</span>[<span class="cm-variable">ha</span>][<span class="cm-variable">co</span>]<span class="cm-operator">&gt;</span><span class="cm-variable">gt</span><span class="cm-operator">+</span><span class="cm-variable">x</span><span class="cm-operator">||</span><span class="cm-variable">vis</span>[<span class="cm-variable">ha</span>][<span class="cm-variable">co</span>]<span class="cm-operator">==</span><span class="cm-number">1</span>) <span class="cm-keyword">continue</span>;</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">28</div></div><pre><span class="cm-tab">    </span><span class="cm-tab">    </span><span class="cm-tab">    </span><span class="cm-variable">Push</span>(<span class="cm-variable">ha</span>);<span class="cm-variable">Push</span>(<span class="cm-variable">co</span>);<span class="cm-variable">vis</span>[<span class="cm-variable">ha</span>][<span class="cm-variable">co</span>]<span class="cm-operator">=</span><span class="cm-number">1</span>;</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">29</div></div><pre><span class="cm-tab">    </span><span class="cm-tab">    </span>}</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">30</div></div><pre><span class="cm-tab">    </span>}</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">31</div></div><pre>}</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">32</div></div><pre><span class="cm-tab">    </span><span class="cm-keyword">return</span> <span class="cm-atom">false</span>;</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">33</div></div><pre>}</pre></div><div style="position: relative;"><div style="position: absolute; left: -29px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 0px; width: 20px;">34</div></div><pre><span class="cm-keyword">int</span> <span class="cm-variable">main</span>()</pre></div></div><div class="CodeMirror-cursor" style="left: 4px; top: 2.40002px; height: 15.2px;">&nbsp;</div><div class="CodeMirror-cursor CodeMirror-secondarycursor" style="display: none;">&nbsp;</div></div></div></div></div><div style="position: absolute; height: 30px; width: 1px; top: 1188px;"></div><div class="CodeMirror-gutters" style="height: 1188px;"><div class="CodeMirror-gutter CodeMirror-linenumbers" style="width: 28px;"></div></div></div></div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2" style="padding-top:0"><dl class="file_box">
+							<dt><div id="fileDiv">Attach file <input type="file" style="width:500px" name="fileData" id="fileData" onchange="userAgentCheckReadFile();" accept=".java,.c,.cpp"></div></dt>
+						</dl></td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<dl class="pt_box">
+								<span class="ft_503834">* If you upload the source file, the source content is automatically entered.</span>
+								<br><span class="ft_503834">* Attach the document after saving in ANSI type. Characters may not display correctly if not saved in ANSI type.</span>
+							</dl>
+						</td>
+					</tr>
+				</tbody></table>
+			</div>
+
+			<div class="box_explain" id="textInfoDiv" style="display: none;">
+				<table class="table_view">
+					<colgroup><col width="100%">
+					<col>
+					</colgroup><tbody><tr>
+						<td style="color: red; font-size: large; padding-left: 10px">
+							※ Select language from the top of screen
+						</td>
+					</tr>
+				</tbody></table>
+			</div>
+
+			<div class="btnarea" id="btnarea">
+				<a href="javascript:;" onclick="return goContest();" class="btnf left"><span>Return to the problem list</span></a>
+			    
+			      
+			      
+					  <a href="javascript:;" onclick="return onEditSave();" class="btnf"><span id="btnEditSave">Save</span></a>
+					  <a href="javascript:;" onclick="return onEditCompile();" class="btnf"><span id="btnEditCompile">Compile</span></a>
+					  <a href="javascript:;" onclick="return onEditSubmit();" class="btnf fun1"><span id="btnEditSubmit">Submit</span></a>
+			      
+			    
+			</div>
+		</div>
+		
+
+
+	</div>
+</form>
+<iframe style="display:none" src="./MoutainWaking_files/saved_resource.html" name="sourceTarget"></iframe>
+
+	<div id="answerLayer" style="display: none ;">
+		<div id="bg" style="background-color: gray; opacity:0.9; position:absolute; width: 100%; height: 100%; top: 0px; left: 0px;z-index: 100;">
+		</div>	
+		<div class="box_survey" id="answerBox" style="position:fixed; left:50%; top:50%; background:#fff; padding:20px; border:4px solid #ddd;min-width: 550px;z-index: 1000;">
+			<ol style="padding-left: 10px; background-image: url(&#39;&#39;); margin-top: 0px">
+				<li style="list-style-type:none;">
+					<h2><p id="contentMessage"></p></h2>
+		   	 	    <textarea id="answerContent" style="width: 100%;" readonly="readonly" class="text_area_readonly"></textarea>
+		    	</li>
+  		    	<div class="center">
+					<a href="javascript:;" onclick="return fn_answerLayerClose();" class="btnf fun1"><span id="btnQSubmit">Close</span></a>
+	    		</div>
+			</ol>
+		</div>
+<!-- 		</div> -->
+	</div>
+
+
+</body></html>

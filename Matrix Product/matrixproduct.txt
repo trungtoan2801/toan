@@ -1,0 +1,35 @@
+Matrix Product
+We need time proportional to N3 to multiply two N*N matrices. We are going to compute AM for a given matrix A.  If we simply conduct matrix multiplication M-1 times, we need time proportional to (M-1)*N3. We may need huge time in this way. You should speed up this job. Given an N*N matrix A, you should provide a program that compute ‘AM mod 100,000,007’ as fast as possible, for an M not smaller than 2.  ‘AM mod q’ means the matrix in which each element has the remainder after divided by q, with the value 0 through q-1.  For instance, ‘  mod 6’ is . (This is just for avoiding overflow by too big integers. You only have to conduct ‘x*y mod q’ for any ‘x*y.’) In this problem, the most important thing is the running time. If time limit passes, you got points for the cases that your program has completed. The input will be provided in the increasing order of problem sizes; so an inefficient program may successfully run only some small cases.  If you try the most naive way, we guess you would have about 30% of the total scores.
+
+Time limit: 2 seconds.
+
+[Input]
+There can be more than one test case in the input file.  The first line has C, the # of test cases. Then the totally C test cases are provided in the following lines. In each test case, the first line has N and M, the dimension of the matrix and the exponent. 1≤N≤100, 1≤M≤10,000,000.  The following N lines enumerate the elements of the matrix. Each line enumerates N elements.  All neighbored numbers in a line are separated by a blank.
+
+ 
+
+  [Output]
+  For each test case, you should print "Case #T" in the first line where T means the case number.   The next N lines enumerate the elements of the solution matrix. As the input file, each line has N elements each separated by a blank.
+
+ 
+
+[I/O Example]
+Input
+2                                 ← There are 2 test cases
+2 4                               ← Starting Case 1
+1 2
+1 2
+3 5                               ← Starting Case 2
+1 0 0
+1 1 1
+1 0 3
+
+
+Output
+Case #1
+27 54
+27 54
+Case #2
+1 0 0
+63 1 121
+121 0 243
