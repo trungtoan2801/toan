@@ -1,0 +1,13 @@
+You need to capture the stationary piece by moving the mobile piece with the minimum amount of moves.　　
+
+Write a program to find out the minimum number moves to catch a piece. 
+
+[Input]
+
+Several test cases can be included in the inputs. T, the number of cases is given in the first row of the inputs. After that, the test cases as many as T are given in a row. 
+
+N, the numbers of the rows and M, the number of columns of the chessboard are given in the first row of each test case. 
+
+R & C is the location information of the attacking piece and S & K is the location of the defending pieces and are given in the row at the second line. However, the location of the uppermost end of the left end is (1, 1)
+
+Maximum value of N or M is 1000.
