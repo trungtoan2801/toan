@@ -1,0 +1,154 @@
+#include <iostream>
+using namespace std;
+
+int n, gtmax, gtmin,low, hight, front, rear;
+int left, right;
+int a[101][101];
+int visitBFS[101][101];
+int dx[] = {0, -1, 0, 1};
+int dy[] = {-1, 0, 1, 0};
+int Q[2][100000];
+
+int BFS(){
+	//Lay gtri cao nhat va thap nhat giua cac diem
+	if(a[1][1] > a[n][n]){
+		hight = a[1][1];
+		low = a[n][n];
+	}
+	else {
+		low = a[1][1];
+		hight = a[n][n];	
+	}
+	//Do cac gia tri nhan gia tri tu hight - low den gtmax - gtmin
+	for(int v = hight - low; v <= gtmax - gtmin; v++){
+		//Xet can ben trai
+		int left = hight - v;	  //Ban dau no la low
+		if(left < 0){
+			left = 0;
+		}
+		//Duyet cac gia tri tu ben trai toi phai
+		for(left; left <= low; left++){
+			int right = v + left; //Ban dau no la gia tri hight
+			
+			for(int i = 1; i <= n; i++){
+				for(int j = 1; j <= n; j++){
+					visitBFS[i][j] = 0;
+				}
+			}
+			front = rear = -1;
+			//them dinh 1,1 vao hang doi
+			rear++;
+			Q[0][rear] = 1;
+			Q[1][rear] = 1;
+			visitBFS[1][1] = 1;
+			while(front != rear){
+				front++;
+				//Lay dinh ra khoi hang doi
+				int u = Q[0][front];
+				int x = Q[1][front];
+				for(int k = 0; k < 4; k++){
+					int im = u + dx[k];
+					int jm = x + dy[k];
+					if(im > 0 && im <= n && jm > 0 && jm <= n){
+						if(visitBFS[im][jm] == 0 && a[im][jm] >= left && a[im][jm] <= right){
+							visitBFS[im][jm] = 1;
+							rear++;
+							Q[0][rear] = im;
+							Q[1][rear] = jm;
+							if(im == n && jm == n){
+								return v;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+int main(){
+	//freopen("Text.txt","r",stdin);
+	int T;
+	cin >> T;
+	for(int tc = 1; tc <= T; tc++){
+		gtmax = 0;
+		gtmin = 110;
+		cin >> n;
+		for(int i = 1; i <= n; i++){
+			for(int j = 1; j <= n; j++){
+				cin >> a[i][j];
+				gtmax = gtmax > a[i][j] ? gtmax : a[i][j];
+				gtmin = gtmin < a[i][j] ? gtmin : a[i][j];
+			}
+		}
+		cout << "#" << tc << " " << BFS() << endl;
+	}
+
+	return 0;
+}
+
+
+//input
+5
+
+5
+
+1 1 3 6 8
+
+1 2 2 5 5
+
+4 4 0 3 3
+
+8 0 2 3 4
+
+4 3 0 2 1
+
+5
+
+99 85 38 22 55
+
+89 28 33 3 65
+
+99 20 14 67 90
+
+36 27 28 77 31
+
+50 45 12 9 14
+
+2
+
+92 83
+
+19 91
+
+5
+
+61 49 32 34 28
+
+100 65 0 10 89
+
+34 99 40 86 4
+
+10 97 49 21 30
+
+95 33 79 51 65
+
+2
+
+17 60
+
+94 27
+
+ 
+
+Output
+
+#1 2
+
+#2 85
+
+#3 9
+
+#4 50
+
+#5 43
