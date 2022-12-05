@@ -1,0 +1,188 @@
+#include <iostream>
+using namespace std;
+int n, slgold;
+int visit[25][25];
+int toadoxgold[5];
+int toadoygold[5];
+int a[25][25];
+int maxstep;
+int queue[100000];
+int front, rear;
+int dx[] = { -1,0,1,0 };
+int dy[] = { 0,1,0,-1 };
+int res;
+
+void resetvisit() {
+	for (int i = 1; i <= n; i++) {
+		for (int j = 1; j <= n; j++) {
+			visit[i][j] = 0;
+		}
+	}
+}
+bool check(int hang, int cot) {
+	for (int i = 0; i < slgold; i++) {
+		int x = toadoxgold[i];
+		int y = toadoygold[i];
+		if (hang == x && cot == y) {
+			return false;
+		}
+	}
+	return true;
+}
+void push(int insert) {
+	queue[rear] = insert;
+	rear++;
+}
+int pop() {
+	int u = queue[front];
+	front++;
+	return u;
+}
+void bfs(int xstart, int ystart) {
+	for (int h = 0; h < slgold; h++) {
+		resetvisit();
+		front = rear = 0;
+		visit[xstart][ystart] = 1;
+		push(xstart);
+		push(ystart);
+		while (rear != front) {
+			int row = pop();
+			int col = pop();
+			for (int i = 0; i < 4; i++) {
+				int dr = row + dx[i];
+				int dc = col + dy[i];
+				if (dr >= 1 && dc >= 1 && dr <= n && dc <= n && a[dr][dc] != 0 && visit[dr][dc] == 0) {
+					visit[dr][dc] = visit[row][col] + 1;
+					push(dr);
+					push(dc);
+					if (a[dr][dc] == 2) {
+						a[dr][dc] = 1;
+						if (maxstep < visit[dr][dc]) {
+							maxstep = visit[dr][dc];
+						}
+						rear = front = 0;
+						i = 4;
+					}
+				}
+			}
+		}
+	}
+
+}
+int main() {
+	//freopen("input.txt", "r", stdin);
+	int T;
+	cin >> T;
+	for (int tc = 1; tc <= T; tc++) {
+		cin >> n >> slgold;
+		res = 999999;
+		for (int i = 0; i < slgold; i++) {
+			int x, y;
+			cin >> x >> y;
+			toadoxgold[i] = x;
+			toadoygold[i] = y;
+		}
+		for (int i = 1; i <= n; i++) {
+			for (int j = 1; j <= n; j++) {
+				cin >> a[i][j];
+			}
+		}
+		for (int i = 1; i <= n; i++) {
+			for (int j = 1; j <= n; j++) {
+				maxstep = 0;
+				if (a[i][j] == 1) {
+					if (check(i, j) == true) {
+						for (int k = 0; k < slgold; k++) {
+							int r = toadoxgold[k];
+							int c = toadoygold[k];
+							a[r][c] = 2;
+						}
+						bfs(i, j);
+						if (maxstep == 0) continue;
+						if (res > maxstep) {
+							res = maxstep;
+						}
+					}
+					else continue;
+				}
+			}
+		}
+		cout << "Case #" << tc << endl << res - 1 << endl;
+	}
+	return 0;
+}
+
+//input sample
+5
+5 2
+4 3
+3 4
+1 1 0 0 0
+1 1 0 0 0
+1 1 1 1 1
+1 1 1 0 1
+1 1 1 1 1
+8 2
+5 6
+6 4
+1 1 1 1 1 1 0 0
+1 1 1 1 1 1 1 0
+1 1 0 1 0 1 1 0
+1 1 1 1 0 1 1 0
+1 1 1 1 1 1 1 0
+1 1 1 1 1 1 1 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+10 3
+8 2
+5 3
+7 1
+0 0 0 1 1 1 1 1 1 0
+1 1 1 1 1 1 1 1 1 0
+1 0 0 1 0 0 0 0 1 0
+1 1 1 1 1 1 1 1 1 1
+1 1 1 1 0 1 0 0 1 1
+1 1 1 1 0 1 0 0 1 1
+1 1 1 1 0 1 0 0 1 1
+1 1 1 1 1 1 1 1 1 1
+1 1 1 0 0 1 0 0 1 1
+1 1 1 1 1 1 1 1 1 1
+8 3
+1 2
+2 8
+5 8
+0 1 0 0 0 0 0 0
+0 1 0 1 1 1 1 1
+0 1 0 1 0 0 0 1
+0 1 1 1 0 0 0 1
+0 1 0 1 0 0 0 1
+0 1 0 1 1 1 1 1
+0 1 0 0 1 0 0 0
+0 1 0 0 1 0 0 0
+10 4
+9 6
+1 9
+7 5
+7 3
+1 1 1 1 1 1 0 1 1 0 
+1 1 1 0 1 1 0 1 1 1 
+1 1 1 1 1 1 1 1 1 1 
+1 1 1 0 1 1 0 1 1 1 
+1 1 1 1 1 0 1 1 1 1 
+1 0 1 1 0 1 1 1 1 1 
+1 0 1 1 1 1 1 0 1 1 
+1 0 1 1 1 1 0 1 1 1 
+1 1 1 1 1 1 1 1 1 1 
+1 0 1 0 1 1 1 1 0 1
+[Output]
+Your program should output the Minimum final cost for traveling from camp to gold mines.
+Case #1
+1
+Case #2
+2
+Case #3
+2
+Case #4
+7
+Case #5
+6
