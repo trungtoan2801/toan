@@ -33,14 +33,23 @@ void solve(int pos, int cntRook)
 	int row = pos/N;
 	int col = pos%N;
 
-
-	if(check(row,col))
+	for (int i = 0; i < 2; i++)
 	{
-		M[row][col] = '+';
-		solve(pos+1, cntRook+1);
-		M[row][col] = '.';
+		if (i==0)
+		{
+			solve(pos+1, cntRook);
+		}
+		else
+		{
+			if (check(row, col))
+			{
+				M[row][col] = '+';
+				solve(pos+1, cntRook+1);
+				M[row][col] = '.';
+			}
+		}
 	}
-	solve(pos+1, cntRook);
+	
 }
 
 int main(int argc, char** argv)
