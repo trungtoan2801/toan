@@ -1,0 +1,110 @@
+//Mario
+#include<iostream>
+using namespace std;
+#define MAX 50
+int a[MAX][MAX];
+int visit[MAX][MAX];
+int n ,m;
+
+int dx[] = {-1,0,0,1};
+int dy[] = {0,-1,1,0};
+int Q[MAX*MAX*2];
+int front,rear;
+
+void resetarr(int arr[MAX][MAX]){
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            arr[i][j] = 0;
+        }
+    }
+}
+
+int main()
+{
+    freopen("input.txt","r",stdin);
+    int tc; cin >> tc;
+    for (int t = 0; t < tc; t++)
+    {
+        cin >> n>>m;
+        int res = 999;
+        int xst,yst,xend,yend;
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < m; j++)
+            {
+                cin >> a[i][j];
+                if( a[i][j] == 2){
+                    xst = i; yst = j;
+                }
+                else if( a[i][j] == 3){
+                    xend = i; yend = j;
+                }
+            }
+        }
+        int h = 0;
+solve:
+        front = rear = 0;
+        Q[rear++] = xst; Q[rear++] = yst;
+        visit[xst][yst] = 1;
+        while(front!= rear){
+            int x1 = Q[front++]; int y1 = Q[front++];
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j <=h; j++)
+                {
+                    int x2 = x1 + dx[i]*j;
+                    int y2 = y1 + dy[i];
+                    while (x2>=0 && x2<n && y2>=0 && y2<m && a[x2][y2] == 1 && visit[x2][y2] == 0){
+                        visit[x2][y2] = 1;
+                        Q[rear++] = x2; Q[rear++] = y2;
+                    }
+                    if( x2 == xend && y2 == yend){
+                        goto thoat;
+                    }
+                }
+            }
+        }
+        resetarr(visit);
+        h++;
+        goto solve;
+thoat:
+        cout<<h<<endl;
+        resetarr(visit);
+    }
+    return 0;
+}
+
+//3
+//5 8
+//1 1 1 1 0 0 0 0
+//0 0 0 3 0 1 1 1
+//1 1 1 0 0 1 0 0 
+//0 0 0 0 0 0 1 0
+//2 1 1 1 1 1 1 1
+//5 6
+//0 1 1 1 0 0
+//3 1 0 1 1 0
+//0 0 0 0 1 1
+//0 0 0 0 0 1
+//2 1 1 1 1 1
+//9 13
+//0 1 1 1 1 1 1 1 1 1 1 1 1 
+//1 1 0 0 0 0 0 0 0 0 0 1 1 
+//0 0 0 0 0 0 0 0 0 0 0 0 0 
+//0 0 0 0 0 0 0 0 0 0 0 0 0 
+//1 1 0 0 0 0 0 0 0 0 0 1 3 
+//0 0 0 0 0 0 0 0 0 0 0 0 0 
+//1 1 0 0 0 0 0 0 0 0 0 0 0 
+//0 0 0 0 0 0 0 0 0 0 0 0 0
+//2 1 1 1 1 1 1 1 1 1 1 1 1
+
+
+Sample output
+Case #1
+2
+Case #2
+1
+Case #3
+3
