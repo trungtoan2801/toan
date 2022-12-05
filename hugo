@@ -1,0 +1,169 @@
+#include <iostream>
+using namespace std;
+
+struct Point
+{
+	int hang,cot;
+};
+
+int M,N;
+int map_ho[16][16];        // chua toa do cac ho va toa do cua ra
+int map_lua[16][16];	  // chua toa do lua theo thoi gian va vi tri co ho se cho = -1
+int kim_cuong[16][16];      // toa do kim cuong
+Point vt_lua[500];			// vi tri cac dam chay
+int dx[4] = {0,-1,0,1};
+int dy[4] = {-1,0,1,0};
+int visit[500][500];
+int kq;
+int so_luong_chay;
+
+struct Queue
+{
+	int rear,front;
+	Point queue[100000];
+	Queue()
+	{
+		rear = front = 0;
+	}
+	void push(Point a)
+	{
+		queue[rear] = a;
+		rear++;
+	}
+	Point pop()
+	{
+		Point a = queue[front];
+		front++;
+		return a;
+	}
+	bool isEmpty()
+	{
+		if(rear == front) return true;
+		else return false;
+	}
+};
+void BFS()
+{
+	Queue Q = Queue();
+	for(int i = 0; i < so_luong_chay; i++)
+	{
+		Q.push(vt_lua[i]);
+	}
+	while(!Q.isEmpty())
+	{
+		Point p = Q.pop();
+		for(int i = 0; i<4;i++)
+		{
+			int hang = p.hang + dx[i];
+			int cot = p.cot + dy[i];
+			if(map_lua[hang][cot] == 0 && hang>=1 && hang<=M && cot>=1 && cot<=N)
+			{
+				map_lua[hang][cot] = map_lua[p.hang][p.cot] +1;
+				Point tp;
+				tp.hang = hang;
+				tp.cot = cot;
+				Q.push(tp);
+			}
+		}
+	}
+}
+void back_track(int hang, int cot, int KC, int thoigian)
+{
+	if(thoigian >= map_lua[hang][cot] && map_lua[hang][cot] > 0)
+	{
+		return;
+	}
+	 if(map_ho[hang][cot] == 100)
+	{
+		if(kq < KC)
+		{
+			kq = KC;
+		}
+		return;
+	}
+	visit[hang][cot] = 1;
+	for(int i = 0; i<4; i++)
+	{
+		int h = hang + dx[i];
+		int c = cot + dy[i];
+		if(visit[h][c] == 0 && h>=1 && h<=M && c>=1 && c<=N)
+		{
+			if(map_lua[h][c] == -1)
+			{
+				back_track(h,c, KC + kim_cuong[h][c], thoigian+2);
+			}
+			else
+			{
+				back_track(h,c, KC + kim_cuong[h][c], thoigian+1);
+			}
+		}
+	}
+	visit[hang][cot] = 0;
+}
+int main()
+{
+	freopen("input.txt","r",stdin);
+	int T;
+	cin >> T;
+	for(int tc =1; tc<=T; tc++)
+	{
+		Point hugo;
+		cin >> M >> N >> hugo.hang >> hugo.cot;
+		//reset map_lua, visit
+		for(int i = 1; i<=M; i++)
+		{
+			for(int j = 1; j<=N; j++)
+			{
+				map_ho[i][j] = 0;
+				map_lua[i][j] = 0;
+				visit[i][j] =0;
+			}
+		}
+
+		cin >> so_luong_chay;
+		for(int i = 0; i < so_luong_chay; i++)
+		{
+			cin >> vt_lua[i].hang >> vt_lua[i].cot;
+			map_lua[vt_lua[i].hang][vt_lua[i].cot] = 1;
+		}
+		int a;
+		cin >> a;
+		for(int i = 0; i<a; i++)
+		{
+			int x,y;
+			cin >> x >> y;
+			map_lua[x][y] = -1;
+		}
+		int c;
+		cin >> c;
+		for(int i = 0; i<c; i++)
+		{
+			int x,y;
+			cin >> x >> y;
+			map_ho[x][y] = 100;
+		}
+		for(int i = 1; i<=M; i++)
+		{
+			for(int j = 1; j<=N; j++)
+			{
+				cin>> kim_cuong[i][j];
+			}
+		}
+		kq = -1;
+		BFS();
+		back_track(hugo.hang,hugo.cot,kim_cuong[hugo.hang][hugo.cot],1);
+			cout <<"Case #" << tc << endl << kq << endl;
+	}
+	return 0;
+}
+
+//input
+1
+4 4 1 2
+2 1 1 4 1
+4 1 3 2 1 3 3 3 4
+2 2 4 3 4
+0 0 10 20
+9 3 2 5
+0 0 0 0
+0 10 0 100
