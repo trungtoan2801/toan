@@ -1,162 +1,147 @@
 #include <iostream>
 using namespace std;
 
-
-struct Point{
-	int x;
-	int y;
-};
-
-class Queue{
-private:
-	int front, rear;
-	Point data[100000];
-public:
-	void reset(){
-		front = rear = -1;
-	}
-	bool isEmpty(){
-		return front==rear;
-	}
-	void push(Point a){
-		rear++;
-		data[rear]=a;
-		
-	}
-	Point pop(){
-		front ++;
-		return data[front];
-	}
-};
-
-int n, countvung;
-int a[101][101],back[101][101],visit[101][101];
+int n;
+int a[101][101];
+int copyA[101][101];
+int visitBFS[101][101];
+int dx1[100000] , dy1[100000];
 int moveX[]= {0, -1, 0, 1};
 int moveY[]= {-1, 0, 1, 0};
-Queue queue;
-void BFS(Point dau){
-	queue.reset();
-	queue.push(dau);
-	visit[dau.x][dau.y]=1;
-	int k=0;
-	Point luu0[10000];
-	int dem[6]={0,0,0,0,0,0};
-	while (!queue.isEmpty()) {
-		Point p;
-		p=queue.pop();
-		if (a[p.x][p.y]==0) {
-			k++;
-			luu0[k]=p;
-		}
-		if (a[p.x][p.y]==0){
-			for (int i=0; i<4; i++){
-				Point p1;
-				p1.x=p.x+moveX[i];
-				p1.y=p.y+moveY[i];
-				if (p1.x > n || p1.x <1 ) continue;
-				if (p1.y > n || p1.y <1 ) continue;
-				if (visit[p1.x][p1.y]==0){
-					visit[p1.x][p1.y]=1;
-					dem[a[p1.x][p1.y]]++;
-					queue.push(p1);
-				}
-			}
-		}
-		if (a[p.x][p.y]!=0){
-			for (int i=0; i<4; i++){
-				Point p1;
-				p1.x=p.x+moveX[i];
-				p1.y=p.y+moveY[i];
-				if (p1.x > n || p1.x <1 ) continue;
-				if (p1.y > n || p1.y <1 ) continue;
-				if (visit[p1.x][p1.y]==0 && a[p1.x][p1.y]==a[p.x][p.y]){
-					visit[p1.x][p1.y]=1;
-					dem[a[p1.x][p1.y]]++;
-					queue.push(p1);
-				}
-			}
+void reset(){
+	for(int i = 1; i <= n; i++){
+		for(int j = 1; j <= n; j++){
+			visitBFS[i][j] = 0;
 		}
 	}
-	int maxdem=0;
-	int trace;
-	for (int i=5; i>0 ; i--){
-		if (dem[i]>maxdem) {
-			maxdem=dem[i];
-			trace=i;
-		}
-	}
-	for (int i=1; i<=k; i++){
-		back[luu0[i].x][luu0[i].y]=trace;
-	}
-};
+}
 
-void BFSvung(Point dau){
-	queue.reset();
-	queue.push(dau);
-	visit[dau.x][dau.y]=1;
-	
-	while (!queue.isEmpty()) {
-			Point p;
-			p=queue.pop();
-			for (int i=0; i<4; i++){
-				Point p1;
-				p1.x=p.x+moveX[i];
-				p1.y=p.y+moveY[i];
-				if (p1.x > n || p1.x <1 ) continue;
-				if (p1.y > n || p1.y <1 ) continue;
-				if (visit[p1.x][p1.y]==0 && back[p1.x][p1.y]==back[p.x][p.y]){
-					visit[p1.x][p1.y]=1;
-					queue.push(p1);
+void BFS(int start, int end){
+	//them dinh vao hang doi
+	int front = -1, rear = -1;
+	rear++;
+	dx1[rear] = start;
+	dy1[rear] = end;
+	visitBFS[start][end] = 1;
+	int demMau[6] = {0};
+	int luuVet[2][100000];
+	int k = 0;
+
+	while(front != rear){
+		front++;
+		//Lay dinh ra khoi hang doi
+		int v = dx1[front];
+		int x = dy1[front];
+		//Co 2 truong hop neu la 0 hoac khac 0
+		if(a[v][x] == 0){
+			//luu lai cac toa do cua phan tu 0 do de lat to mau
+			k++;
+			luuVet[0][k] = v;
+			luuVet[1][k] = x;
+		}
+		if(a[v][x] == 0){
+			//Them cac dinh ke voi dinh 0 vao
+			for(int k = 0 ; k < 4; k++){
+				int im = v + moveX[k];
+				int jm = x + moveY[k];
+				if(im > 0 && im <= n && jm > 0 && jm <= n && visitBFS[im][jm] == 0){
+					visitBFS[im][jm] = 1;
+					rear++;
+					demMau[a[im][jm]] ++;
+					dx1[rear] = im;
+					dy1[rear] = jm;
 				}
 			}
-	}
-};
-void initvisit(){
-	for (int i=1; i<=n; i++){
-		for (int j=1; j<=n; j++){
-			visit[i][j]=0;
+		}
+		if(a[v][x] != 0){					//neu khac 0 thi chi dem cac phan tu bang voi cha no
+			for(int k = 0 ; k < 4; k++){
+				int im = v + moveX[k];
+				int jm = x + moveY[k];
+				if(im > 0 && im <= n && jm > 0 && jm <= n && visitBFS[im][jm] == 0 && a[im][jm] == a[v][x]){
+					visitBFS[im][jm] = 1;
+					rear++;
+					demMau[a[im][jm]] ++;
+					dx1[rear] = im;
+					dy1[rear] = jm;
+				}
+			}
 		}
 	}
-};
+
+	//Tim phan tu lap lai lon nhat
+	int maxdem = 0;
+	int luuMauMax;
+	for(int i = 1; i <= 6; i++){
+		if(maxdem <= demMau[i]){
+			maxdem = demMau[i];
+			luuMauMax = i;
+		}
+	}
+	//Cho cac phan tu 0 do thanh mau lon nhat
+	for(int i = 1; i <= k; i++){
+		copyA[luuVet[0][i]][luuVet[1][i]] = luuMauMax;
+	}
+}
+
+void demVung(int s, int t){
+	//dung bfs de dem
+	int front = -1, rear = -1;
+	//them dinh vao hang doi
+	rear++;
+	dx1[rear] = s;
+	dy1[rear] = t;
+	visitBFS[s][t] = 1;
+	while(front != rear){
+		front++;
+		int v = dx1[front];
+		int x = dy1[front];
+		for(int k = 0; k < 4; k++){
+			int im = v + moveX[k];
+			int jm = x + moveY[k];
+			if(im > 0 && im <= n && jm > 0 && jm <= n && visitBFS[im][jm] == 0
+				&& copyA[im][jm] == copyA[v][x]){
+				visitBFS[im][jm] = 1;
+				rear++;
+				dx1[rear] = im;
+				dy1[rear] = jm;
+			}
+		}
+	}
+}
 int main(){
-	//freopen("Text1.txt","r",stdin);
-	int tc;
-	cin >>tc;
-	for (int t=1; t<=tc; t++){
-		cin >>n;
-		for (int i=1; i<=n; i++){
-			for (int j=1; j<=n; j++){
+	freopen("Text.txt","r",stdin);
+	int t; cin >> t;
+	for(int tc = 1; tc <= t; tc++){
+		//reset();
+		cin >> n;
+		for(int i = 1; i <= n; i++){
+			for(int j = 1; j <= n ;j++){
 				cin >> a[i][j];
-				visit[i][j]=0;
-				back[i][j]=a[i][j];
+				copyA[i][j] = a[i][j];
+				visitBFS[i][j] = 0;
 			}
 		}
-		for (int i=1; i<=n; i++){
-			for (int j=1; j<=n; j++){
-				if (back[i][j]==0){
-					Point p;
-					p.x=i;
-					p.y=j;
-					BFS(p);
-					initvisit();
+
+		for(int i = 1; i <= n; i++){
+			for(int j = 1; j <= n ;j++){
+				if(copyA[i][j] == 0){
+					BFS(i, j);
+					reset();
 				}
 			}
 		}
-		
-		countvung=0;
-		for (int i=1; i<=n; i++){
-			for (int j=1; j<=n; j++){
-				if (visit[i][j]==0){
-					countvung++;
-					Point pdau;
-					pdau.x=i;
-					pdau.y=j;
-					BFSvung(pdau);
+
+		//============================IN RA MAN HINH=========================
+		int cnt = 0;
+		for(int i = 1; i <= n; i++){
+			for(int j = 1; j <= n ;j++){
+				if(visitBFS[i][j] == 0){
+					cnt++;
+					demVung(i, j);
 				}
 			}
 		}
-		cout <<"Case #"<< t << endl << countvung << endl;
-		
+		cout << "Case #" << tc << endl << cnt << endl;
 	}
 	return 0;
 }
