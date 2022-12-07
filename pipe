@@ -1,0 +1,201 @@
+#include <iostream>
+using namespace std;
+struct Point
+{
+	int hang, cot;
+};
+int duongong[8][4] = {{0,0,0,0},
+					  {1,1,1,1},
+					  {1,1,0,0},
+					  {0,0,1,1},
+					  {1,0,0,1},
+					  {0,1,0,1},
+					  {0,1,1,0},
+					  {1,0,1,0}};
+int dx[4] = {-1,1,0,0};
+int dy[4] = {0,0,-1,1};
+int visit[51][51];
+int map[51][51];
+int N,M;
+int h_start,c_start,theluc;
+Point queue[1000000];
+int dem;
+struct Queue
+{
+	int rear,front;
+	Queue()
+	{
+		rear = front = 0;
+	}
+	void push(Point a)
+	{
+		queue[rear] = a;
+		rear++;
+	}
+	Point pop()
+	{
+		Point a ;
+		a = queue[front];
+		front++;
+		return a;
+	}
+	bool isEmpty()
+	{
+		if(rear == front) return true;
+		else return false;
+	}
+};
+bool check(Point vt1, Point vt2, int huong)
+{
+	if(huong == 0)
+	{
+		if( duongong[map[vt1.hang][vt1.cot]][0] == 1 && duongong[map[vt2.hang][vt2.cot]][1] == 1 )
+		{
+			return true;
+		}
+		else return false;
+	}
+	else if(huong == 1)
+	{
+		if( duongong[map[vt1.hang][vt1.cot]][1] == 1 && duongong[map[vt2.hang][vt2.cot]][0] == 1 )
+		{
+			return true;
+		}
+		else return false;
+	}
+	else if(huong == 2)
+	{
+		if( duongong[map[vt1.hang][vt1.cot]][2] == 1 && duongong[map[vt2.hang][vt2.cot]][3] == 1 )
+		{
+			return true;
+		}
+		else return false;
+	}
+	else if(huong == 3)
+	{
+		if( duongong[map[vt1.hang][vt1.cot]][3] == 1 && duongong[map[vt2.hang][vt2.cot]][2] == 1 )
+		{
+			return true;
+		}
+		else return false;
+	}
+	return false;
+}
+void BFS(Point start)
+{
+	Queue Q = Queue();
+	Q.push(start);
+	visit[start.hang][start.cot] = 1;
+	while(!Q.isEmpty())
+	{
+		Point p = Q.pop();
+		if(visit[p.hang][p.cot] == theluc)
+		{
+			return;
+		}
+		for(int i = 0; i<4;i++)
+		{
+			int h = p.hang + dx[i];
+			int c = p.cot +dy[i];
+			Point tp;
+			tp.hang = h;
+			tp.cot = c;
+			if(h>=0 && h<N && c>=0 && c< M && visit[h][c] == 0 && map[h][c] != 0)
+			{
+				if(check(p,tp,i) == true)
+				{
+					visit[h][c] = visit[p.hang][p.cot] +1;
+					dem++;
+					Q.push(tp);
+				}
+			}
+		}
+	}
+}
+int main()
+{
+	//freopen("Text.txt","r",stdin);
+	int T;
+	cin >>T;
+	for(int tc = 1; tc<=T;tc++)
+	{
+		cin >> N >> M >> h_start >>c_start >> theluc;
+		for(int i = 0; i<N; i++)
+		{
+			for(int j = 0; j<M;j++)
+			{
+				cin >> map[i][j];
+				visit[i][j] = 0;
+			}
+		}
+		Point st;
+		st.hang = h_start;
+		st.cot = c_start;
+		dem = 1;
+		BFS(st);
+		cout <<"Case #" << tc << endl << dem << endl;
+	}
+	return 0;
+}
+
+//
+5
+
+5 6 2 1 3
+
+0 0 5 3 6 0
+
+0 0 2 0 2 0
+
+3 3 1 3 7 0
+
+0 0 0 0 0 0
+
+0 0 0 0 0 0
+
+5 6 2 2 6
+
+3 0 0 0 0 3
+
+2 0 0 0 0 6
+
+1 3 1 1 3 1
+
+2 0 2 0 0 2
+
+0 0 4 3 1 1
+
+10 10 4 3 9
+
+0 0 0 0 0 0 0 0 0 0
+
+0 0 0 7 5 0 5 0 0 0
+
+0 0 3 2 2 6 0 0 0 0
+
+0 4 7 2 2 2 7 0 0 4
+
+0 3 0 1 1 2 2 0 0 5
+
+0 5 6 1 1 1 1 6 2 5
+
+7 4 1 2 0 0 4 6 0 0
+
+5 3 1 7 0 2 2 6 5 7
+
+7 3 2 1 1 7 1 0 2 7
+
+3 4 0 0 4 0 5 1 0 1
+
+//out
+Case #1
+
+5
+
+Case #2
+
+15
+
+Case #3
+
+29
