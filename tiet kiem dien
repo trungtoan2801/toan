@@ -1,0 +1,110 @@
+#include <iostream>
+using namespace std;
+int so_bong;
+int sokhoa;
+int A[105];
+int kq;
+int visit[15];
+void bat(int khoa)
+{
+	for(int i =0; khoa + i*(khoa+1) <=so_bong;i++)
+	{
+		int tp = A[khoa + i*(khoa+1)];
+		if(tp == 0)
+		{
+			A[khoa + i*(khoa+1)] = 1;
+		}
+		else 
+		{
+			A[khoa + i*(khoa+1)] = 0;
+		}
+	}
+}
+int tinhtong()
+{
+	int tong = 0;
+	for(int i = 1; i<=so_bong;i++)
+	{
+		if(A[i] == 0)
+		{
+			tong++;
+		}
+	}
+	return tong;
+}
+void back_track(int dem, int so_bong_tat, int vt)
+{
+	if(kq<so_bong_tat)
+	{
+		kq = so_bong_tat;
+	}
+	if(dem == 3)
+	{
+		return;
+	}
+	for(int i =vt; i<=sokhoa;i++)
+	{
+			int backup[105];
+			bat(i);
+			back_track(dem+1, tinhtong(), i+1);
+			bat(i);
+	}
+}
+int main()
+{
+	freopen("Text.txt","r",stdin);
+	int T;
+	cin >> T;
+	for(int tc = 1; tc<=T; tc++)
+	{
+		int dem = 0;
+		cin >> so_bong >> sokhoa;
+		for(int i = 1;i<=so_bong;i++)
+		{
+			cin >> A[i];
+			if(A[i] == 0)
+			{
+				dem = dem + 1;
+			}
+		}
+		kq = dem;
+		back_track(0,0,1);
+		cout <<"#" << tc << " " << kq << endl;
+	}
+	return 0;
+}
+
+//input
+10
+10 6
+1 0 0 0 0 1 0 0 1 0 
+85 4
+1 1 1 0 1 0 1 0 0 1 1 1 1 1 1 0 1 0 1 1 0 1 1 1 1 0 0 0 1 1 0 1 0 0 1 1 1 1 1 0 1 1 1 1 1 1 0 1 0 1 0 1 1 1 0 0 1 0 0 0 1 0 0 0 1 0 0 0 0 1 1 0 0 0 0 1 1 1 0 1 1 1 1 1 1
+13 4
+1 1 0 0 1 0 1 1 0 1 1 0 1 
+21 5
+1 0 0 1 0 1 0 0 1 1 0 1 0 0 1 0 0 0 1 0 0 
+71 6
+0 1 0 0 0 1 0 0 1 1 0 0 1 1 1 0 1 1 1 0 1 1 1 0 1 0 1 0 1 0 0 0 1 0 0 1 0 1 0 0 1 0 1 0 0 1 1 1 0 0 1 0 0 0 0 1 0 1 1 1 0 0 1 0 0 0 1 0 1 0 1 
+68 8
+0 1 0 1 0 0 1 1 0 0 1 1 0 1 0 1 0 1 1 1 1 1 0 1 1 1 0 1 0 1 1 1 1 0 1 0 0 1 0 1 0 0 0 0 1 1 0 0 0 1 1 0 0 1 1 0 1 0 1 0 0 0 0 1 1 1 1 0 
+30 5
+1 1 1 1 1 0 0 0 1 1 1 1 0 0 1 0 1 0 1 1 0 1 0 1 0 1 0 0 1 0 
+65 8
+1 0 1 0 0 1 1 0 1 0 1 1 1 1 1 1 0 0 1 0 0 0 1 1 0 1 0 0 0 1 0 1 0 0 1 1 0 0 1 1 1 1 1 0 1 1 0 1 0 1 1 1 0 1 0 0 1 1 1 1 1 1 0 0 1 
+14 4
+1 1 0 0 0 0 0 0 0 0 0 0 1 1 
+58 4
+1 1 1 1 0 1 0 0 1 1 0 0 0 0 0 1 0 0 1 0 0 1 1 0 1 1 1 1 0 0 1 1 1 1 0 0 1 1 1 1 1 1 1 0 1 1 1 1 0 0 0 0 1 1 1 0 0 1
+
+// output
+#1 9
+#2 48
+#3 9
+#4 15
+#5 44
+#6 40
+#7 21
+#8 38
+#9 11
+#10 29
