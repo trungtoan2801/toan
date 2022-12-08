@@ -1,79 +1,110 @@
 //Mario
-#include<iostream>
+#include <iostream>
 using namespace std;
-#define MAX 50
-int a[MAX][MAX];
-int visit[MAX][MAX];
-int n ,m;
-
-int dx[] = {-1,0,0,1};
-int dy[] = {0,-1,1,0};
-int Q[MAX*MAX*2];
-int front,rear;
-
-void resetarr(int arr[MAX][MAX]){
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < m; j++)
-        {
-            arr[i][j] = 0;
-        }
-    }
+int M,N;
+int map[55][55];
+int buoc;
+struct Point
+{
+	int hang,cot;
+};
+Point start,stop;
+int dx[4] = {0,-1,0,1};
+int dy[4] = {-1,0,1,0};
+int ans;
+Point queue[100000];
+struct Queue
+{
+	int rear,front;
+	Queue()
+	{
+		rear = front = 0;
+	}
+	void push(Point a)
+	{
+		queue[rear] = a;
+		rear++;
+	}
+	Point pop()
+	{
+		Point a;
+		a = queue[front];
+		front++;
+		return a;
+	}
+	bool isEmpty()
+	{
+		if(rear == front) return true;
+		else return false;
+	}
+};
+void BFS()
+{
+	int visit[55][55] = {0};
+	Queue Q = Queue();
+	Q.push(start);
+	visit[start.hang][start.cot] = 1;
+	while(!Q.isEmpty())
+	{
+		Point p = Q.pop();
+		for(int i = 0; i<4; i++)
+		{
+			for(int t = 1; t<=buoc; t++)
+			{
+				int h = p.hang + dx[i]*t;
+				int c = p.cot + dy[i];
+				if(h>=1 && h<= M && c>=1 && h <=N && visit[h][c] == 0 && map[h][c] != 0)
+				{
+					visit[h][c] = 1;
+					Point tp;
+					tp.hang = h;
+					tp.cot = c;
+					Q.push(tp);
+					if(h == stop.hang && c == stop.cot)
+					{
+						ans = buoc;
+						return;
+					}
+				}
+			}
+		}
+	}
 }
-
 int main()
 {
-    freopen("input.txt","r",stdin);
-    int tc; cin >> tc;
-    for (int t = 0; t < tc; t++)
-    {
-        cin >> n>>m;
-        int res = 999;
-        int xst,yst,xend,yend;
-        for (int i = 0; i < n; i++)
-        {
-            for (int j = 0; j < m; j++)
-            {
-                cin >> a[i][j];
-                if( a[i][j] == 2){
-                    xst = i; yst = j;
-                }
-                else if( a[i][j] == 3){
-                    xend = i; yend = j;
-                }
-            }
-        }
-        int h = 0;
-solve:
-        front = rear = 0;
-        Q[rear++] = xst; Q[rear++] = yst;
-        visit[xst][yst] = 1;
-        while(front!= rear){
-            int x1 = Q[front++]; int y1 = Q[front++];
-            for (int i = 0; i < 4; i++)
-            {
-                for (int j = 0; j <=h; j++)
-                {
-                    int x2 = x1 + dx[i]*j;
-                    int y2 = y1 + dy[i];
-                    while (x2>=0 && x2<n && y2>=0 && y2<m && a[x2][y2] == 1 && visit[x2][y2] == 0){
-                        visit[x2][y2] = 1;
-                        Q[rear++] = x2; Q[rear++] = y2;
-                    }
-                    if( x2 == xend && y2 == yend){
-                        goto thoat;
-                    }
-                }
-            }
-        }
-        resetarr(visit);
-        h++;
-        goto solve;
-thoat:
-        cout<<h<<endl;
-        resetarr(visit);
-    }
-    return 0;
+	//freopen("Text.txt","r",stdin);
+	int T;
+	cin >> T;
+	for(int tc=1; tc<=T; tc++)
+	{
+		cin >> M >> N;
+		for(int i = 1; i<= M; i++)
+		{
+			for(int j = 1; j<=N; j++)
+			{
+				cin >> map[i][j];
+				if(map[i][j] == 2)
+				{
+					start.hang = i;
+					start.cot = j;
+				}
+				else if(map[i][j] == 3)
+				{
+					stop.hang = i;
+					stop.cot = j;
+				}
+			}
+		}
+		ans = -1;
+		buoc = 1;
+		while(ans == -1)
+		{
+			BFS();
+			buoc++;
+		}
+		cout << "Case #" << tc << endl << ans << endl;
+	}
+	return 0;
 }
 
 //3
