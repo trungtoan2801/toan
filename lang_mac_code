@@ -1,0 +1,137 @@
+#include <iostream>
+using namespace std;
+int N;
+int MT_ke[305][305];
+int ds_ke[305][305];
+int visit[305];
+int sovung,vung_co_lap, cau;
+int colap;
+struct Queue
+{
+	int queue[100000];
+	int rear,front;
+	Queue()
+	{
+		rear = front = 0;
+	}
+	void push(int a)
+	{
+		queue[rear] = a;
+		rear++;
+	}
+	int pop()
+	{
+		int a;
+		a = queue[front];
+		front++;
+		return a;
+	}
+	bool isEmpty()
+	{
+		if(rear == front) return true;
+		else return false;
+	}
+};
+void BFS(int S)
+{
+	Queue Q = Queue();
+	Q.push(S);
+	visit[S] = 1;
+	while(!Q.isEmpty())
+	{
+		int p = Q.pop();
+		colap++;
+		for(int i = 1; i<= ds_ke[p][0];i++)
+		{
+			if(visit[ds_ke[p][i]] == 0)
+			{
+				visit[ds_ke[p][i]] = 1;
+				Q.push(ds_ke[p][i]);
+			}
+		}
+	}
+}
+bool BFS2(int start, int end)
+{
+	int vs[305] = {0};
+	Queue Q = Queue();
+	Q.push(start);
+	vs[start] = 1;
+	while(!Q.isEmpty())
+	{
+		int p = Q.pop();
+		for(int i =1; i<= ds_ke[p][0];i++)
+		{
+			
+			if(vs[ds_ke[p][i]] == 0 && MT_ke[p][ds_ke[p][i]] == 1 &&  MT_ke[ds_ke[p][i]][p] == 1)
+			{
+				if(ds_ke[p][i] == end) return true;
+				vs[ds_ke[p][i]] = 1;
+				Q.push(ds_ke[p][i]);
+			}
+		}
+	}
+	return false;
+}
+int main()
+{
+	freopen("Text.txt","r",stdin);
+	int T;
+	cin >> T;
+	for(int tc = 1; tc<=T; tc++)
+	{
+		cin >> N;
+		for(int i = 0; i<=N; i++)
+		{
+			visit[i] = 0;
+			for(int j = 0; j<=N; j++)
+			{
+				ds_ke[i][j] = 0;
+				MT_ke[i][j] = 0;
+			}
+		}
+		for(int i = 1; i<=N; i++)
+		{
+			for(int j = 1; j<=N; j++)
+			{
+				cin >> MT_ke[i][j];
+				if(MT_ke[i][j] == 1)
+				{
+					ds_ke[i][0]++;
+					ds_ke[i][ds_ke[i][0]] = j;
+				}
+			}
+		}
+		sovung = 0;
+		vung_co_lap = 0;
+		cau = 0;
+		for(int i = 1; i<=N;i++)
+		{
+			if(visit[i] == 0)
+			{
+				colap = 0;
+				sovung++;
+				BFS(i);
+				if(colap == 1) vung_co_lap++;
+			}
+		}
+		for(int i = 1; i<=N;i++)
+		{
+			for(int j = i; j<=N;j++)
+			{
+				if(MT_ke[i][j] == 1)
+				{
+					MT_ke[i][j] = 0;
+					MT_ke[j][i] = 0;
+					//change();
+					bool kt = BFS2(i,j);
+					if(kt == false) cau++;
+					MT_ke[i][j] = 1;
+					MT_ke[j][i] = 1;
+				}
+			}
+		}
+		cout << sovung << " " << vung_co_lap << " " << cau << endl;
+	}
+	return 0 ;
+}
